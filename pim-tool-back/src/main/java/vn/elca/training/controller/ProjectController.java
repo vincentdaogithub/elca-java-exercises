@@ -32,4 +32,10 @@ public class ProjectController extends AbstractController {
                         .map(EntityMapper::mapProjectToProjectDto)
                         .collect(Collectors.toList()), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/count")
+    public ResponseEntity<Long> countAllProjects() {
+        return new ResponseEntity<>(
+                projectService.countAllProjects(), HttpStatus.OK);
+    }
 }

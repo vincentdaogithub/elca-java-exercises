@@ -1,9 +1,10 @@
 package vn.elca.training.entity;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.exception.EndDateBeforeOrEqualStartDateException;
 import vn.elca.training.model.exception.EndDateSetWhenStartDateIsNullException;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@ExtendWith(SpringExtension.class)
 class ProjectTest {
 
     private static final String NULL_OR_BLANK = "%s is Null or Blank";
@@ -25,12 +27,6 @@ class ProjectTest {
             "End Date of the Project happens before the Start Date";
     private static final String END_DATE_WITH_START_DATE_NULL =
             "End Date of the Project is set when the Start Date is Null";
-    private static final String BIRTH_DATE_TODAY_TOMORROW =
-            "Birth Date is Today or in the Future";
-    private static final String DUPLICATE_VISA = "Employee Visa is Duplicated (must be Unique)";
-    private static final String DUPLICATE_PROJECT_NUMBER = "Project Number is Duplicated (must be Unique)";
-    private static final String INVALID_PROJECT_STATUS = "Project Status does not exist in predefined set of Statuses";
-
 
     private Project projectTest;
 
@@ -181,9 +177,6 @@ class ProjectTest {
 
     @Test
     void givenProject_whenSetVersionBelow0_thenThrowFieldOutOfRangeException() {
-        Assertions.assertThrows(
-                FieldOutOfRangeException.class,
-                () -> projectTest.setVersion(-1L));
         assertThatThrownBy(() -> projectTest.setVersion(-1L))
                 .isInstanceOf(FieldOutOfRangeException.class)
                 .hasMessage(OUT_OF_RANGE, "version");
