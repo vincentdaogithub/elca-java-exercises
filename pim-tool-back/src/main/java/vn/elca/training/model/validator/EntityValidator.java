@@ -14,7 +14,7 @@ public class EntityValidator {
         if (id == null) {
             throw new NullOrBlankFieldException("id");
         }
-        if (id.compareTo(BigDecimal.ZERO) <= 0 || id.compareTo(new BigDecimal("9999999999999999999")) > 0) {
+        if (id.compareTo(BigDecimal.ZERO) < 0 || id.compareTo(new BigDecimal("9999999999999999999")) > 0) {
             throw new FieldOutOfRangeException("id");
         }
     }

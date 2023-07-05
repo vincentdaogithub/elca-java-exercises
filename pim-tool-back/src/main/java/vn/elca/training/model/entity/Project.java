@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Project implements Serializable {
@@ -44,7 +44,7 @@ public class Project implements Serializable {
     private Date endDate;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    private Set<ProjectEmployee> projectEmployees;
+    private List<ProjectEmployee> projectEmployees;
 
     @Version
     @Column(nullable = false, precision = 10)
@@ -52,19 +52,23 @@ public class Project implements Serializable {
 
     public Project() { }
 
-    public Project(BigDecimal id, Group group, Integer projectNumber, String name, String customer,
-                   ProjectStatus status, Date startDate, Date endDate, Set<ProjectEmployee> projectEmployees,
-                   Long version) {
-        setId(id);
-        setGroup(group);
-        setProjectNumber(projectNumber);
-        setName(name);
-        setCustomer(customer);
-        setStatus(status);
+    public Project(
+            Group group,
+            Integer projectNumber,
+            String name,
+            String customer,
+            ProjectStatus status,
+            Date startDate,
+            Date endDate,
+            Long version) {
+        this.group = group;
+        this.projectNumber = projectNumber;
+        this.name = name;
+        this.customer = customer;
+        this.status = status;
         this.startDate = startDate;
-        setEndDate(endDate);
-        this.projectEmployees = projectEmployees;
-        setVersion(version);
+        this.endDate = endDate;
+        this.version = version;
     }
 
     public BigDecimal getId() {
@@ -139,11 +143,11 @@ public class Project implements Serializable {
         this.endDate = endDate;
     }
 
-    public Set<ProjectEmployee> getProjectEmployees() {
+    public List<ProjectEmployee> getProjectEmployees() {
         return projectEmployees;
     }
 
-    public void setProjectEmployees(Set<ProjectEmployee> projectEmployees) {
+    public void setProjectEmployees(List<ProjectEmployee> projectEmployees) {
         this.projectEmployees = projectEmployees;
     }
 

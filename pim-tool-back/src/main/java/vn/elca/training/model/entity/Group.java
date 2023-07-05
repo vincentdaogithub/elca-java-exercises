@@ -28,8 +28,7 @@ public class Group implements Serializable {
 
     public Group() { }
 
-    public Group(BigDecimal id, Employee groupLeader, Set<Project> projects, Long version) {
-        setId(id);
+    public Group(Employee groupLeader, Set<Project> projects, Long version) {
         setGroupLeader(groupLeader);
         this.projects = projects;
         setVersion(version);

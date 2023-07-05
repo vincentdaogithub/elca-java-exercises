@@ -3,28 +3,30 @@ package vn.elca.training.service;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.repository.ProjectRepository;
-import vn.elca.training.repository.impl.ProjectRepositoryImpl;
-import vn.elca.training.service.impl.ProjectServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ExtendWith(SpringExtension.class)
 class ProjectServiceTest {
 
-    private final ProjectRepository projectRepository;
-    private final ProjectService projectService;
+    @MockBean
+    private ProjectRepository projectRepository;
 
-    public ProjectServiceTest() {
-        projectRepository = mock(ProjectRepositoryImpl.class);
-        projectService = new ProjectServiceImpl(projectRepository);
-    }
+    @Autowired
+    private ProjectService projectService;
 
     @AfterEach
     void resetProjectRepository() {

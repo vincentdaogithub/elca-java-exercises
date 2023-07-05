@@ -1,12 +1,12 @@
 package vn.elca.training.service;
 
-import vn.elca.training.model.entity.Employee;
+import vn.elca.training.model.dto.EmployeeDto;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployees();
+    List<EmployeeDto> getAllEmployees();
 
     Long countAllEmployees();
 }

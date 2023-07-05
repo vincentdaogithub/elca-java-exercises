@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.elca.training.model.dto.GroupDto;
-import vn.elca.training.model.mapper.EntityMapper;
 import vn.elca.training.service.GroupService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/groups")
@@ -27,9 +25,6 @@ public class GroupController extends AbstractController {
     @GetMapping(path = "/")
     public ResponseEntity<List<GroupDto>> getAllProjectsAsDto() {
         return new ResponseEntity<>(
-                groupService.getAllGroups()
-                        .stream()
-                        .map(EntityMapper::mapGroupToGroupDto)
-                        .collect(Collectors.toList()), HttpStatus.OK);
+                groupService.getAllGroups(), HttpStatus.OK);
     }
 }

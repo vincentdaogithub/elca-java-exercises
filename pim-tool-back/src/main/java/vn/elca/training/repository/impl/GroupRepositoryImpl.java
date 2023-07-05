@@ -8,6 +8,7 @@ import vn.elca.training.model.entity.QGroup;
 import vn.elca.training.repository.GroupRepository;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -33,5 +34,13 @@ public class GroupRepositoryImpl implements GroupRepository {
         return new JPAQuery<Group>(entityManager)
                 .from(group)
                 .fetchCount();
+    }
+
+    @Override
+    public Group getGroupById(BigDecimal id) {
+        return new JPAQuery<Group>(entityManager)
+                .from(group)
+                .where(group.id.eq(id))
+                .fetchOne();
     }
 }

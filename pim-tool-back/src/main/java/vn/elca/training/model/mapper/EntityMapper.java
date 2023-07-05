@@ -1,19 +1,18 @@
 package vn.elca.training.model.mapper;
 
-import vn.elca.training.model.dto.EmployeeDto;
-import vn.elca.training.model.dto.GroupDto;
-import vn.elca.training.model.dto.ProjectDto;
-import vn.elca.training.model.dto.ProjectEmployeeDto;
+import org.springframework.stereotype.Component;
+import vn.elca.training.model.dto.*;
 import vn.elca.training.model.entity.Employee;
 import vn.elca.training.model.entity.Group;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.entity.ProjectEmployee;
 
+import java.math.BigDecimal;
+
+@Component
 public class EntityMapper {
 
-    EntityMapper() { }
-
-    public static ProjectDto mapProjectToProjectDto(Project project) {
+    public ProjectDto mapProjectToProjectDto(Project project) {
         ProjectDto projectDto =  new ProjectDto();
         projectDto.setId(project.getId());
         projectDto.setProjectNumber(project.getProjectNumber());
@@ -26,7 +25,7 @@ public class EntityMapper {
         return projectDto;
     }
 
-    public static ProjectEmployeeDto mapProjectEmployeeToProjectEmployeeDto(ProjectEmployee projectEmployee) {
+    public ProjectEmployeeDto mapProjectEmployeeToProjectEmployeeDto(ProjectEmployee projectEmployee) {
         ProjectEmployeeDto projectEmployeeDto = new ProjectEmployeeDto();
         projectEmployeeDto.setId(projectEmployee.getId());
         projectEmployeeDto.setProjectNumber(projectEmployee.getProject().getProjectNumber());
@@ -34,7 +33,7 @@ public class EntityMapper {
         return projectEmployeeDto;
     }
 
-    public static EmployeeDto mapEmployeeToEmployeeDto(Employee employee) {
+    public EmployeeDto mapEmployeeToEmployeeDto(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setId(employee.getId());
         employeeDto.setVisa(employee.getVisa());
@@ -44,10 +43,26 @@ public class EntityMapper {
         return employeeDto;
     }
 
-    public static GroupDto mapGroupToGroupDto(Group group) {
+    public GroupDto mapGroupToGroupDto(Group group) {
         GroupDto groupDto = new GroupDto();
         groupDto.setId(group.getId());
         groupDto.setGroupLeaderVisa(group.getGroupLeader().getVisa());
         return groupDto;
+    }
+
+    public Project mapProjectUpdateDtoToProject(
+            ProjectUpdateDto projectUpdateDto,
+            Group group) {
+        Project project = new Project();
+        project.setId(BigDecimal.ZERO);
+        project.setGroup(group);
+        project.setProjectNumber(projectUpdateDto.getProjectNumber());
+        project.setName(projectUpdateDto.getProjectName());
+        project.setCustomer(projectUpdateDto.getCustomer());
+        project.setStatus(projectUpdateDto.getStatus());
+        project.setStartDate(projectUpdateDto.getStartDate());
+        project.setEndDate(projectUpdateDto.getEndDate());
+        project.setVersion(0L);
+        return project;
     }
 }

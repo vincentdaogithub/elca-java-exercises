@@ -24,10 +24,9 @@ public class ProjectEmployee implements Serializable {
 
     public ProjectEmployee() { }
 
-    public ProjectEmployee(BigDecimal id, Project project, Employee employee) {
-        setId(id);
-        setProject(project);
-        setEmployee(employee);
+    public ProjectEmployee(Project project, Employee employee) {
+        this.project = project;
+        this.employee = employee;
     }
 
     public BigDecimal getId() {

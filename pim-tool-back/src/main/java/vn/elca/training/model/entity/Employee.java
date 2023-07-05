@@ -33,9 +33,8 @@ public class Employee implements Serializable {
 
     public Employee() { }
 
-    public Employee(BigDecimal id, String visa, EmployeeDetail employeeDetail, Group group,
+    public Employee(String visa, EmployeeDetail employeeDetail, Group group,
                     Set<ProjectEmployee> projectEmployees, Long version) {
-        setId(id);
         setVisa(visa);
         setEmployeeDetail(employeeDetail);
         this.group = group;

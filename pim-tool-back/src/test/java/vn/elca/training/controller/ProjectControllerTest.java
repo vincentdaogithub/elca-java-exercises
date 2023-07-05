@@ -23,15 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 class ProjectControllerTest {
 
-    private final MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
     @MockBean
     private ProjectService projectService;
-
-    @Autowired
-    public ProjectControllerTest(MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
-    }
 
     @AfterEach
     void cleanUpProjectService() {

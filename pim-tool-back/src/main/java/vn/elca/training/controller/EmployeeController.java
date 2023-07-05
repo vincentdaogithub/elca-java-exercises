@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.elca.training.model.dto.EmployeeDto;
-import vn.elca.training.model.mapper.EntityMapper;
 import vn.elca.training.service.EmployeeService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/employees")
@@ -27,9 +25,6 @@ public class EmployeeController extends AbstractController {
     @GetMapping(path = "/")
     public ResponseEntity<List<EmployeeDto>> getAllProjectsAsDto() {
         return new ResponseEntity<>(
-                employeeService.getAllEmployees()
-                        .stream()
-                        .map(EntityMapper::mapEmployeeToEmployeeDto)
-                        .collect(Collectors.toList()), HttpStatus.OK);
+                employeeService.getAllEmployees(), HttpStatus.OK);
     }
 }

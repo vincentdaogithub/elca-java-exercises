@@ -8,6 +8,7 @@ import vn.elca.training.model.entity.QEmployee;
 import vn.elca.training.repository.EmployeeRepository;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -33,5 +34,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         return new JPAQuery<Employee>(entityManager)
                 .from(employee)
                 .fetchCount();
+    }
+
+    @Override
+    public Employee getEmployeeById(BigDecimal id) {
+        return new JPAQuery<Employee>(entityManager)
+                .from(employee)
+                .where(employee.id.eq(id))
+                .fetchOne();
     }
 }
