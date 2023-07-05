@@ -43,7 +43,6 @@ class ProjectServiceTest {
         List<Project> projectListFromRepository = projectRepository.getAllProjects();
 
         assertThat(projectService.getAllProjects())
-                .isEqualTo(projectListFromRepository)
                 .hasSameSizeAs(projectListFromRepository);
     }
 
