@@ -1,4 +1,4 @@
-package vn.elca.training.exception;
+package vn.elca.training.custom_exception;
 
 public abstract class AbstractCustomException extends RuntimeException {
 

@@ -22,4 +22,6 @@ public interface ProjectEmployeeRepository {
     List<ProjectEmployee> updateProjectEmployees(Project projectToUpdate, List<Employee> employeesToUpdate);
 
     ProjectEmployee getProjectEmployeeById(BigDecimal id);
+
+    void removeProjectEmployeesByProjectId(BigDecimal projectId);
 }

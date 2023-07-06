@@ -1,16 +1,15 @@
 package vn.elca.training.repository.impl;
 
+import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.entity.QProject;
-import vn.elca.training.model.exception.DuplicateProjectNumberException;
-import vn.elca.training.model.exception.ModifyExistingProjectNumberException;
-import vn.elca.training.model.exception.NoneOrMultipleProjectsUpdateException;
-import vn.elca.training.model.exception.UpdateNonExistingProjectException;
+import vn.elca.training.model.exception.*;
 import vn.elca.training.repository.ProjectRepository;
+import vn.elca.training.repository.exception.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
@@ -106,5 +105,29 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 .from(project)
                 .where(project.id.eq(projectToUpdate.getId()))
                 .fetchOne();
+    }
+
+    @Override
+    public void removeProject(BigDecimal id) {
+        entityManager.flush();
+        long result = new JPADeleteClause(entityManager, project)
+                .where(project.id.eq(id))
+                .execute();
+        if (result != 1) {
+            throw new NoneOrMultipleProjectsRemoveException();
+        }
+        entityManager.clear();
+    }
+
+    @Override
+    public void removeProjects(List<BigDecimal> ids) {
+        entityManager.flush();
+        long result = new JPADeleteClause(entityManager, project)
+                .where(project.id.in(ids))
+                .execute();
+        if (result < 1) {
+            throw new NoProjectRemoveException();
+        }
+        entityManager.clear();
     }
 }

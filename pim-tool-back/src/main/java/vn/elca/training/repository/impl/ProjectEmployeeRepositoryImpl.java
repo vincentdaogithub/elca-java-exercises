@@ -76,4 +76,12 @@ public class ProjectEmployeeRepositoryImpl implements ProjectEmployeeRepository 
                 .where(projectEmployee.id.eq(id))
                 .fetchOne();
     }
+
+    @Override
+    public void removeProjectEmployeesByProjectId(BigDecimal projectId) {
+        entityManager.flush();
+        new JPADeleteClause(entityManager, projectEmployee)
+                .where(projectEmployee.project.id.eq(projectId))
+                .execute();
+    }
 }

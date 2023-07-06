@@ -25,7 +25,7 @@ public class Employee implements Serializable {
     @OneToOne(mappedBy = "groupLeader")
     private Group group;
 
-    @OneToMany(mappedBy = "employee", orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = { CascadeType.REMOVE }, orphanRemoval = true)
     private List<ProjectEmployee> projectEmployees;
 
     @Version

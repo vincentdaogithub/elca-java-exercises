@@ -13,12 +13,17 @@ import vn.elca.training.model.entity.Project;
 import vn.elca.training.util.DateUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
-@ComponentScan(basePackageClasses = { ProjectRepository.class })
+@ComponentScan(basePackageClasses = {
+        ProjectRepository.class,
+        ProjectEmployeeRepository.class
+})
 class ProjectRepositoryTest {
 
     @Autowired
@@ -26,6 +31,9 @@ class ProjectRepositoryTest {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectEmployeeRepository projectEmployeeRepository;
 
     @Test
     void givenProjectRepositoryTest_whenStartTheWholeTest_thenTheClassIsSetUp() {
@@ -95,5 +103,28 @@ class ProjectRepositoryTest {
         projectToUpdate.setVersion(expectedUpdatedProject.getVersion());
         Project revertedProject = entityManager.merge(projectToUpdate);
         assertThat(revertedProject).isEqualTo(projectToUpdate);
+    }
+
+    @Test
+    void givenProjectRepository_whenRemoveAProject_thenRemoveIt() {
+        Project projectToRemove = entityManager.find(Project.class, BigDecimal.ONE);
+        projectEmployeeRepository.removeProjectEmployeesByProjectId(projectToRemove.getId());
+        projectRepository.removeProject(projectToRemove.getId());
+        Project removedProject = entityManager.find(Project.class, BigDecimal.ONE);
+
+        assertThat(removedProject).isNull();
+    }
+
+    @Test
+    void givenProjectRepository_whenRemoveMultipleProject_thenRemoveAllOfThem() {
+        List<BigDecimal> projectIdsToRemove = new ArrayList<>();
+        projectIdsToRemove.add(BigDecimal.valueOf(2));
+        projectIdsToRemove.add(BigDecimal.valueOf(4));
+        projectIdsToRemove.forEach(projectEmployeeRepository::removeProjectEmployeesByProjectId);
+        projectRepository.removeProjects(projectIdsToRemove);
+
+        assertThat(entityManager.find(Project.class, BigDecimal.valueOf(2))).isNull();
+        assertThat(entityManager.find(Project.class, BigDecimal.valueOf(4))).isNull();
+        assertThat(entityManager.find(Project.class, BigDecimal.valueOf(3))).isNotNull();
     }
 }

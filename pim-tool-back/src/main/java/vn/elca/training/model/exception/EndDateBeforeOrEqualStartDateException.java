@@ -1,6 +1,6 @@
 package vn.elca.training.model.exception;
 
-import vn.elca.training.exception.AbstractCustomException;
+import vn.elca.training.custom_exception.AbstractCustomException;
 
 public class EndDateBeforeOrEqualStartDateException extends AbstractCustomException {
 

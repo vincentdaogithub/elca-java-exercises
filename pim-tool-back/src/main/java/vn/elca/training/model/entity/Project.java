@@ -44,7 +44,7 @@ public class Project implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
     private List<ProjectEmployee> projectEmployees;
 
     @Version

@@ -17,6 +17,7 @@ import vn.elca.training.repository.ProjectRepository;
 import vn.elca.training.service.ProjectService;
 import vn.elca.training.service.custom.AbstractService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,5 +86,17 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
                         .map(employeeRepository::getEmployeeById)
                         .collect(Collectors.toList()));
         return entityMapper.mapProjectToProjectDto(updatedProject);
+    }
+
+    @Override
+    public void removeProject(BigDecimal projectIdToRemove) {
+        projectEmployeeRepository.removeProjectEmployeesByProjectId(projectIdToRemove);
+        projectRepository.removeProject(projectIdToRemove);
+    }
+
+    @Override
+    public void removeProjects(List<BigDecimal> projectIdsToRemove) {
+        projectIdsToRemove.forEach(projectEmployeeRepository::removeProjectEmployeesByProjectId);
+        projectRepository.removeProjects(projectIdsToRemove);
     }
 }

@@ -19,11 +19,12 @@ import vn.elca.training.util.DateUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -108,9 +109,42 @@ class ProjectControllerTest {
         String requestBody = objectMapper.writeValueAsString(new ProjectUpdateDto());
         String responseBody = objectMapper.writeValueAsString(resultProject);
         mockMvc.perform(post("/pim-api/projects/update")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
                 .andExpect(status().isOk())
                 .andExpect(content().string(responseBody));
+    }
+
+    @Test
+    void givenProjectController_whenPostProjectIdToRemove_thenRemoveIt() throws Exception {
+        assertThatCode(() -> {
+            projectService.removeProject(BigDecimal.ONE);
+        }).doesNotThrowAnyException();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(post("/pim-api/projects/remove")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(BigDecimal.valueOf(1))))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Removed successfully"));
+    }
+
+    @Test
+    void givenProjectController_whenPostProjectIdsToRemove_thenRemoveAllOfThem() throws Exception {
+        List<BigDecimal> projectIdsToRemove = new ArrayList<>();
+        projectIdsToRemove.add(BigDecimal.valueOf(1));
+        projectIdsToRemove.add(BigDecimal.valueOf(2));
+        projectIdsToRemove.add(BigDecimal.valueOf(3));
+
+        assertThatCode(() -> {
+            projectService.removeProjects(projectIdsToRemove);
+        }).doesNotThrowAnyException();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(post("/pim-api/projects/remove")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(projectIdsToRemove)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Removed successfully"));
     }
 }

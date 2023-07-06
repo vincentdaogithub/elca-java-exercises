@@ -1,13 +1,17 @@
 package vn.elca.training.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.elca.training.controller.exception.InvalidUserRequestException;
 import vn.elca.training.model.dto.ProjectDto;
 import vn.elca.training.model.dto.ProjectUpdateDto;
 import vn.elca.training.service.ProjectService;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,5 +45,27 @@ public class ProjectController extends AbstractController {
     public ResponseEntity<ProjectDto> updateProject(
             @RequestBody ProjectUpdateDto projectToUpdate) {
         return new ResponseEntity<>(projectService.updateProject(projectToUpdate), HttpStatus.OK);
+    }
+
+    @SuppressWarnings("unchecked")
+    @PostMapping(path = "/remove")
+    public ResponseEntity<String> removeProject(
+            @RequestBody JsonNode projectIdsToRemove) {
+        if (projectIdsToRemove.isNumber()) {
+            projectService.removeProject(projectIdsToRemove.decimalValue());
+        } else if (projectIdsToRemove.isArray()) {
+            List<BigDecimal> convertedProjectIds = new ArrayList<>();
+            for (JsonNode projectIdToRemove : projectIdsToRemove) {
+                if (projectIdToRemove.isNumber()) {
+                    convertedProjectIds.add(projectIdToRemove.decimalValue());
+                } else {
+                    throw new InvalidUserRequestException();
+                }
+                projectService.removeProjects(convertedProjectIds);
+            }
+        } else {
+            throw new InvalidUserRequestException();
+        }
+        return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
     }
 }

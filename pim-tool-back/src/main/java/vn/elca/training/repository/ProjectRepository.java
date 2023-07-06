@@ -18,4 +18,8 @@ public interface ProjectRepository {
     Project getProjectById(BigDecimal id);
 
     Project updateProject(Project projectToUpdate);
+
+    void removeProject(BigDecimal id);
+
+    void removeProjects(List<BigDecimal> ids);
 }
