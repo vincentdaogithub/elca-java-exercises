@@ -1,0 +1,65 @@
+* {
+    color: #666666;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1rem 10vw;
+    box-sizing: border-box;
+    border-bottom: 0.1rem solid #b9b9b9;
+}
+
+.pim-banner {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.pim-logo-container {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pim-logo {
+    width: 100%;
+    height: auto;
+}
+
+.pim-title {
+    font-size: 1.5rem;
+    margin-left: 2rem;
+}
+
+.utils-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.highlight-blue {
+    color: #2f85fa;
+}
+
+.locale-switch-button {
+    margin-right: 6rem;
+}
+
+.help-button {
+    margin-right: 2rem;
+}

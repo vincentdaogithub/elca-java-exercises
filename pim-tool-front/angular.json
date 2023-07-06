@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "pim-tool-front": {
+      "i18n": {
+        "sourceLocale":"en-US",
+        "locales": {
+          "fr-FR": "src/locale/messages.fr.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,6 +19,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": [
+              "fr-FR"
+            ],
             "outputPath": "dist/pim-tool-front",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -66,7 +75,10 @@
               "browserTarget": "pim-tool-front:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 8080
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -94,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "54a1402c-c0d6-4522-a9d9-928e5015e145"
   }
 }
