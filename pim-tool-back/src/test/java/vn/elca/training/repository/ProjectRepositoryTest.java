@@ -13,16 +13,12 @@ import vn.elca.training.model.entity.Project;
 import vn.elca.training.util.DateUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
-@ComponentScan(basePackageClasses = {
-        ProjectRepository.class,
-        GroupRepository.class
-})
+@ComponentScan(basePackageClasses = { ProjectRepository.class })
 class ProjectRepositoryTest {
 
     @Autowired
@@ -30,9 +26,6 @@ class ProjectRepositoryTest {
 
     @Autowired
     private ProjectRepository projectRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
 
     @Test
     void givenProjectRepositoryTest_whenStartTheWholeTest_thenTheClassIsSetUp() {
@@ -52,22 +45,31 @@ class ProjectRepositoryTest {
 
     @Test
     void givenProjectRepository_whenAddNewProject_thenProjectListHasNewProject() {
+        Long originalProjectRepositorySize = projectRepository.countAllProjects();
         Group group = entityManager.find(Group.class, BigDecimal.ONE);
         Project project = new Project(
                 group,
                 1,
-                "haha",
-                "hihi",
+                "name",
+                "customer",
                 ProjectStatus.NEW,
                 DateUtils.getCurrentDateUTC0(),
                 null,
                 0L);
         Project addedProject = projectRepository.addNewProject(project);
 
-        assertThat(projectRepository.countAllProjects()).isEqualTo(6);
-        assertThat(projectRepository.getProjectById(addedProject.getId())).isEqualTo(addedProject);
+        assertThat(addedProject).isNotNull();
+        assertThat(projectRepository.countAllProjects()).isEqualTo(originalProjectRepositorySize + 1);
 
         entityManager.remove(addedProject);
-        assertThat(projectRepository.countAllProjects()).isEqualTo(5);
+        assertThat(projectRepository.countAllProjects()).isEqualTo(originalProjectRepositorySize);
+    }
+
+    @Test
+    void givenProjectRepository_whenGetProjectById_thenReturnProject() {
+        Project expectedProject = entityManager.find(Project.class, BigDecimal.ONE);
+        Project actualProject = projectRepository.getProjectById(BigDecimal.ONE);
+
+        assertThat(actualProject).isNotNull().isEqualTo(expectedProject);
     }
 }

@@ -39,14 +39,20 @@ public class ProjectEmployeeRepositoryImpl implements ProjectEmployeeRepository 
     }
 
     @Override
-    public ProjectEmployee addNewProjectEmployee(Project project, Employee employee) {
-        ProjectEmployee projectEmployeeToAdd = new ProjectEmployee(
-                project, employee);
+    public ProjectEmployee addNewProjectEmployee(ProjectEmployee projectEmployeeToAdd) {
         entityManager.persist(projectEmployeeToAdd);
         return new JPAQuery<ProjectEmployee>(entityManager)
                 .from(projectEmployee)
-                .where(projectEmployee.project.id.eq(project.getId())
-                        .and(projectEmployee.employee.id.eq(employee.getId())))
+                .where(projectEmployee.project.id.eq(projectEmployeeToAdd.getProject().getId())
+                        .and(projectEmployee.employee.id.eq(projectEmployeeToAdd.getEmployee().getId())))
+                .fetchOne();
+    }
+
+    @Override
+    public ProjectEmployee getProjectEmployeeByProjectIdAndEmployeeId(BigDecimal projectId, BigDecimal employeeId) {
+        return new JPAQuery<ProjectEmployee>(entityManager)
+                .from(projectEmployee)
+                .where(projectEmployee.project.id.eq(projectId).and(projectEmployee.employee.id.eq(employeeId)))
                 .fetchOne();
     }
 }

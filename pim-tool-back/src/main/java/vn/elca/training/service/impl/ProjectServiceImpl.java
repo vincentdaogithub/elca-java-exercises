@@ -8,6 +8,7 @@ import vn.elca.training.model.dto.ProjectDto;
 import vn.elca.training.model.dto.ProjectUpdateDto;
 import vn.elca.training.model.entity.Group;
 import vn.elca.training.model.entity.Project;
+import vn.elca.training.model.entity.ProjectEmployee;
 import vn.elca.training.model.exception.NullOrBlankFieldException;
 import vn.elca.training.model.mapper.EntityMapper;
 import vn.elca.training.repository.EmployeeRepository;
@@ -64,8 +65,12 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
         Project project = entityMapper.mapProjectUpdateDtoToProject(projectToAdd, group);
         Project newProject = projectRepository.addNewProject(project);
         projectToAdd.getMembers()
-                .forEach(m -> projectEmployeeRepository.addNewProjectEmployee(
-                        newProject, employeeRepository.getEmployeeById(m)));
+                .forEach(m -> {
+                    ProjectEmployee newProjectEmployee = new ProjectEmployee(
+                            newProject,
+                            employeeRepository.getEmployeeById(m));
+                    projectEmployeeRepository.addNewProjectEmployee(newProjectEmployee);
+                });
         return newProject;
     }
 }
