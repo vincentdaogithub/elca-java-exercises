@@ -90,4 +90,27 @@ class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(responseBody));
     }
+
+    @Test
+    void givenProjectController_whenPostProjectToUpdate_thenReturnUpdatedProject() throws Exception {
+        ProjectDto resultProject = new ProjectDto(
+                BigDecimal.ONE,
+                1,
+                "name",
+                "customer",
+                ProjectStatus.NEW.getStatus(),
+                DateUtils.getCurrentDateUTC0(),
+                null);
+        when(projectService.updateProject(any(ProjectUpdateDto.class))).thenReturn(resultProject);
+        assertThat(projectService.updateProject(new ProjectUpdateDto())).isEqualTo(resultProject);
+
+        ObjectMapper objectMapper = new ObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        String requestBody = objectMapper.writeValueAsString(new ProjectUpdateDto());
+        String responseBody = objectMapper.writeValueAsString(resultProject);
+        mockMvc.perform(post("/pim-api/projects/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(content().string(responseBody));
+    }
 }
