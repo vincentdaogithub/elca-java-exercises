@@ -16,4 +16,6 @@ public interface ProjectRepository {
     Project addNewProject(Project projectToAdd);
 
     Project getProjectById(BigDecimal id);
+
+    Project updateProject(Project projectToUpdate);
 }

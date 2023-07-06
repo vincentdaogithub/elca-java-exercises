@@ -9,7 +9,6 @@ import vn.elca.training.model.dto.ProjectUpdateDto;
 import vn.elca.training.model.entity.Group;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.entity.ProjectEmployee;
-import vn.elca.training.model.exception.NullOrBlankFieldException;
 import vn.elca.training.model.mapper.EntityMapper;
 import vn.elca.training.repository.EmployeeRepository;
 import vn.elca.training.repository.GroupRepository;
@@ -60,9 +59,9 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Project addNewProject(ProjectUpdateDto projectToAdd) {
-        Group group = groupRepository.getGroupById(projectToAdd.getGroupId());
-        Project project = entityMapper.mapProjectUpdateDtoToProject(projectToAdd, group);
+    public ProjectDto addNewProject(ProjectUpdateDto projectToAdd) {
+        Group groupToAdd = groupRepository.getGroupById(projectToAdd.getGroupId());
+        Project project = entityMapper.mapProjectUpdateDtoToProject(projectToAdd, groupToAdd);
         Project newProject = projectRepository.addNewProject(project);
         projectToAdd.getMembers()
                 .forEach(m -> {
@@ -71,6 +70,20 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
                             employeeRepository.getEmployeeById(m));
                     projectEmployeeRepository.addNewProjectEmployee(newProjectEmployee);
                 });
-        return newProject;
+        return entityMapper.mapProjectToProjectDto(newProject);
+    }
+
+    @Override
+    public ProjectDto updateProject(ProjectUpdateDto projectToUpdate) {
+        Group groupToUpdate = groupRepository.getGroupById(projectToUpdate.getGroupId());
+        Project project = entityMapper.mapProjectUpdateDtoToProject(projectToUpdate, groupToUpdate);
+        Project updatedProject = projectRepository.updateProject(project);
+        projectEmployeeRepository.updateProjectEmployees(
+                updatedProject,
+                projectToUpdate.getMembers()
+                        .stream()
+                        .map(employeeRepository::getEmployeeById)
+                        .collect(Collectors.toList()));
+        return entityMapper.mapProjectToProjectDto(updatedProject);
     }
 }

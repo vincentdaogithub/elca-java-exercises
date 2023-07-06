@@ -12,7 +12,7 @@ import vn.elca.training.service.EmployeeService;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/employees")
+@RequestMapping(path = "/pim-api/employees")
 public class EmployeeController extends AbstractController {
 
     private final EmployeeService employeeService;

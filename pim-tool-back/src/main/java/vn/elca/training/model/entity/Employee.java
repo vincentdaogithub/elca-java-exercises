@@ -5,7 +5,8 @@ import vn.elca.training.model.validator.EntityValidator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Employee implements Serializable {
@@ -25,7 +26,7 @@ public class Employee implements Serializable {
     private Group group;
 
     @OneToMany(mappedBy = "employee", orphanRemoval = true)
-    private Set<ProjectEmployee> projectEmployees;
+    private List<ProjectEmployee> projectEmployees;
 
     @Version
     @Column(nullable = false, length = 10)
@@ -33,13 +34,17 @@ public class Employee implements Serializable {
 
     public Employee() { }
 
-    public Employee(String visa, EmployeeDetail employeeDetail, Group group,
-                    Set<ProjectEmployee> projectEmployees, Long version) {
+    public Employee(String visa, EmployeeDetail employeeDetail, Long version) {
         setVisa(visa);
         setEmployeeDetail(employeeDetail);
-        this.group = group;
-        this.projectEmployees = projectEmployees;
         setVersion(version);
+    }
+
+    public Employee(BigDecimal id, String visa, EmployeeDetail employeeDetail, Long version) {
+        this.id = id;
+        this.visa = visa;
+        this.employeeDetail = employeeDetail;
+        this.version = version;
     }
 
     public BigDecimal getId() {
@@ -77,11 +82,11 @@ public class Employee implements Serializable {
         this.group = group;
     }
 
-    public Set<ProjectEmployee> getProjectEmployees() {
+    public List<ProjectEmployee> getProjectEmployees() {
         return projectEmployees;
     }
 
-    public void setProjectEmployees(Set<ProjectEmployee> projectEmployees) {
+    public void setProjectEmployees(List<ProjectEmployee> projectEmployees) {
         this.projectEmployees = projectEmployees;
     }
 
@@ -92,5 +97,21 @@ public class Employee implements Serializable {
     public void setVersion(Long version) {
         EntityValidator.validateVersion(version);
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id)
+                && Objects.equals(visa, employee.visa)
+                && Objects.equals(employeeDetail, employee.employeeDetail)
+                && Objects.equals(version, employee.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, visa, employeeDetail, version);
     }
 }

@@ -5,6 +5,7 @@ import vn.elca.training.model.validator.EntityValidator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 public class ProjectEmployee implements Serializable {
@@ -54,5 +55,20 @@ public class ProjectEmployee implements Serializable {
     public void setEmployee(Employee employee) {
         EntityValidator.validateNotNull(employee, "employee");
         this.employee = employee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProjectEmployee)) return false;
+        ProjectEmployee that = (ProjectEmployee) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(project, that.project)
+                && Objects.equals(employee, that.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, project, employee);
     }
 }

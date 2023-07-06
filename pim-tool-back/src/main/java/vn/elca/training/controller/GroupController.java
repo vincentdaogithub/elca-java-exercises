@@ -12,7 +12,7 @@ import vn.elca.training.service.GroupService;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/groups")
+@RequestMapping(path = "/pim-api/groups")
 public class GroupController extends AbstractController {
 
     private final GroupService groupService;

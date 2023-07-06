@@ -72,4 +72,28 @@ class ProjectRepositoryTest {
 
         assertThat(actualProject).isNotNull().isEqualTo(expectedProject);
     }
+
+    @Test
+    void givenProjectRepository_whenUpdateProject_thenReturnUpdatedProject() {
+        Project projectToUpdate = entityManager.find(Project.class, BigDecimal.ONE);
+        Group group = entityManager.find(Group.class, BigDecimal.valueOf(2));
+        Project project = new Project(
+                projectToUpdate.getId(),
+                group,
+                projectToUpdate.getProjectNumber(),
+                "name",
+                "customer",
+                ProjectStatus.PLANNED,
+                DateUtils.getCurrentDateUTC0(),
+                null,
+                projectToUpdate.getVersion());
+        Project actualUpdatedProject = projectRepository.updateProject(project);
+        Project expectedUpdatedProject = entityManager.find(Project.class, actualUpdatedProject.getId());
+
+        assertThat(actualUpdatedProject).isEqualTo(expectedUpdatedProject);
+
+        projectToUpdate.setVersion(expectedUpdatedProject.getVersion());
+        Project revertedProject = entityManager.merge(projectToUpdate);
+        assertThat(revertedProject).isEqualTo(projectToUpdate);
+    }
 }

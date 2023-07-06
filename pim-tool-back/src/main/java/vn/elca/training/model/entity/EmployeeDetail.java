@@ -8,6 +8,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Embeddable
 public class EmployeeDetail implements Serializable {
@@ -55,5 +56,20 @@ public class EmployeeDetail implements Serializable {
     public void setBirthDate(Date birthDate) {
         EntityValidator.validateBirthDate(birthDate, "birthDate");
         this.birthDate = birthDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeDetail)) return false;
+        EmployeeDetail that = (EmployeeDetail) o;
+        return Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName)
+                && Objects.equals(birthDate, that.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, birthDate);
     }
 }

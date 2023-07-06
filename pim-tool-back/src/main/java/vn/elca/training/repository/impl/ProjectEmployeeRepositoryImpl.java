@@ -1,5 +1,6 @@
 package vn.elca.training.repository.impl;
 
+import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import vn.elca.training.repository.ProjectEmployeeRepository;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -53,6 +55,25 @@ public class ProjectEmployeeRepositoryImpl implements ProjectEmployeeRepository 
         return new JPAQuery<ProjectEmployee>(entityManager)
                 .from(projectEmployee)
                 .where(projectEmployee.project.id.eq(projectId).and(projectEmployee.employee.id.eq(employeeId)))
+                .fetchOne();
+    }
+
+    @Override
+    public List<ProjectEmployee> updateProjectEmployees(Project projectToUpdate, List<Employee> employeesToUpdate) {
+        new JPADeleteClause(entityManager, projectEmployee).where(projectEmployee.project.eq(projectToUpdate)).execute();
+        List<ProjectEmployee> updatedProjectEmployees = new ArrayList<>();
+        employeesToUpdate.forEach(e -> {
+            ProjectEmployee projectEmployeeToAdd = new ProjectEmployee(projectToUpdate, e);
+            updatedProjectEmployees.add(addNewProjectEmployee(projectEmployeeToAdd));
+        });
+        return updatedProjectEmployees;
+    }
+
+    @Override
+    public ProjectEmployee getProjectEmployeeById(BigDecimal id) {
+        return new JPAQuery<ProjectEmployee>(entityManager)
+                .from(projectEmployee)
+                .where(projectEmployee.id.eq(id))
                 .fetchOne();
     }
 }

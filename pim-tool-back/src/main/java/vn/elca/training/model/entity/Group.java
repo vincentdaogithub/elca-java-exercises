@@ -5,6 +5,8 @@ import vn.elca.training.model.validator.EntityValidator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "GROUP_")
@@ -20,7 +22,7 @@ public class Group implements Serializable {
     private Employee groupLeader;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
-    private Set<Project> projects;
+    private List<Project> projects;
 
     @Version
     @Column(nullable = false)
@@ -28,10 +30,15 @@ public class Group implements Serializable {
 
     public Group() { }
 
-    public Group(Employee groupLeader, Set<Project> projects, Long version) {
+    public Group(Employee groupLeader, Long version) {
         setGroupLeader(groupLeader);
-        this.projects = projects;
         setVersion(version);
+    }
+
+    public Group(BigDecimal id, Employee groupLeader, Long version) {
+        this.id = id;
+        this.groupLeader = groupLeader;
+        this.version = version;
     }
 
     public BigDecimal getId() {
@@ -52,11 +59,11 @@ public class Group implements Serializable {
         this.groupLeader = groupLeader;
     }
 
-    public Set<Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
 
@@ -67,5 +74,20 @@ public class Group implements Serializable {
     public void setVersion(Long version) {
         EntityValidator.validateVersion(version);
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group)) return false;
+        Group group = (Group) o;
+        return Objects.equals(id, group.id)
+                && Objects.equals(groupLeader, group.groupLeader)
+                && Objects.equals(version, group.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, groupLeader, version);
     }
 }

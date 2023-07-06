@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Project implements Serializable {
@@ -61,6 +62,27 @@ public class Project implements Serializable {
             Date startDate,
             Date endDate,
             Long version) {
+        this.group = group;
+        this.projectNumber = projectNumber;
+        this.name = name;
+        this.customer = customer;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.version = version;
+    }
+
+    public Project(
+            BigDecimal id,
+            Group group,
+            Integer projectNumber,
+            String name,
+            String customer,
+            ProjectStatus status,
+            Date startDate,
+            Date endDate,
+            Long version) {
+        this.id = id;
         this.group = group;
         this.projectNumber = projectNumber;
         this.name = name;
@@ -158,5 +180,35 @@ public class Project implements Serializable {
     public void setVersion(Long version) {
         EntityValidator.validateVersion(version);
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id)
+                && Objects.equals(group.getId(), project.group.getId())
+                && Objects.equals(projectNumber, project.projectNumber)
+                && Objects.equals(name, project.name)
+                && Objects.equals(customer, project.customer)
+                && status == project.status
+                && Objects.equals(startDate, project.startDate)
+                && Objects.equals(endDate, project.endDate)
+                && Objects.equals(version, project.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                id,
+                group.getId(),
+                projectNumber,
+                name,
+                customer,
+                status,
+                startDate,
+                endDate,
+                version);
     }
 }
