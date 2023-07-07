@@ -1,4 +1,4 @@
-<h1 class="title" i18n="newProjectTitle">New Project</h1>
+<h1 class="title" i18n>Update Project</h1>
 
 <form [formGroup]="projectForm" (ngSubmit)="submitProjectForm()">
 
@@ -11,8 +11,7 @@
         <div class="label-box">
             <label for="projectNumber" i18n>Project Number</label><span class="color-red"> *</span>
         </div>
-        <input class="input short" type="number" name="projectNumber" required="This field is required" min="1" max="9999" formControlName="projectNumber" />
-        <p class="error-project-number" *ngIf="projectNumberAlreadyExisted" i18n>The project number already existed. Please select a different project number</p>
+        <input class="input short" type="number" name="projectNumber" value="{{projectToUpdate.projectNumber}}" readonly />
     </div>
 
     <div class="input-box">
@@ -78,6 +77,6 @@
 
     <div class="control-box">
         <a class="cancel" routerLink="projects" i18n>Cancel</a>
-        <input class="create-button" type="submit" value="Create Project" i18n-value />
+        <input class="create-button" type="submit" value="Update Project" i18n-value />
     </div>
 </form>

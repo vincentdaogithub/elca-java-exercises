@@ -43,7 +43,7 @@ public class ProjectController extends AbstractController {
         return new ResponseEntity<>(projectService.addNewProject(projectToAdd), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/update")
+    @PutMapping(path = "/update")
     @Convert(converter = ProjectStatusConverter.class)
     public ResponseEntity<ProjectDto> updateProject(
             @RequestBody ProjectUpdateDto projectToUpdate) {
@@ -51,7 +51,7 @@ public class ProjectController extends AbstractController {
     }
 
     @SuppressWarnings("unchecked")
-    @PostMapping(path = "/remove")
+    @DeleteMapping(path = "/remove")
     public ResponseEntity<String> removeProject(
             @RequestBody JsonNode projectIdsToRemove) {
         if (projectIdsToRemove.isNumber()) {
@@ -70,5 +70,20 @@ public class ProjectController extends AbstractController {
             throw new InvalidUserRequestException();
         }
         return new ResponseEntity<>("Removed successfully", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/check/{projectNumber}")
+    @Convert(converter = ProjectStatusConverter.class)
+    public ResponseEntity<Boolean> checkIfProjectNumberExists(
+            @PathVariable(name = "projectNumber") Integer projectNumber) {
+        return new ResponseEntity<>(projectService.checkIfProjectNumberExist(projectNumber), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{projectNumber}")
+    @Convert(converter = ProjectStatusConverter.class)
+    public ResponseEntity<ProjectUpdateDto> getProjectByProjectNumber(
+            @PathVariable(name = "projectNumber") Integer projectNumber) {
+        ProjectUpdateDto result = projectService.getProjectByProjectNumber(projectNumber);
+        return new ResponseEntity<>(result, result != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

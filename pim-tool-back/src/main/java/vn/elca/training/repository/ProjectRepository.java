@@ -22,4 +22,6 @@ public interface ProjectRepository {
     void removeProject(BigDecimal id);
 
     void removeProjects(List<BigDecimal> ids);
+
+    Project getProjectByProjectNumber(Integer projectNumber);
 }

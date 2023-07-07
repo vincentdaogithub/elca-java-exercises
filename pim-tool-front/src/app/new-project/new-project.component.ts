@@ -3,8 +3,11 @@ import { ProjectService } from '../project.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupService } from '../group.service';
 import { Group } from '../model/group';
-import { take } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
+import { EmployeeService } from '../employee.service';
+import { Employee } from '../model/employee';
 
 @Component({
   selector: 'app-new-project',
@@ -14,55 +17,90 @@ import { Router } from '@angular/router';
 export class NewProjectComponent implements OnInit {
 
   groups: Group[] = [];
+  employees: Employee[] = []
 
   projectForm: FormGroup = this.fb.group({
-    projectNumber: ['', [Validators.required, Validators.min(1), Validators.max(9999), Validators.pattern("^\d{1,}$")]],
+    projectNumber: ['', [Validators.required, Validators.min(1), Validators.max(9999)]],
     projectName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     customer: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-    groupId: ['', [Validators.required, Validators.min(1), Validators.max(19), Validators.pattern("^\d{1,}$")]],
+    groupId: ['', [Validators.required, Validators.min(1), Validators.max(19)]],
     membersAsString: '',
     status: ['', Validators.required],
     startDate: ['', Validators.required],
-    endDate: ['', Validators.required]
+    endDate: ''
   });
 
   invalid: boolean = false;
+  projectNumberAlreadyExisted = false;
+  invalidVisas: string[] = [];
 
   constructor(
     private groupService: GroupService,
     private fb: FormBuilder,
     private projectService: ProjectService,
-    private router: Router) { }
+    private router: Router,
+    private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
-    this.getAllProject();
+    this.getAllGroups();
+    this.getAllEmployees();
   }
 
-  getAllProject() {
+  getAllGroups() {
     this.groupService.getAllGroups().subscribe({
       next: (value) => this.groups = value,
-      error: (err) => alert(err.message),
+      error: (err) => this.router.navigate(['/error']),
     });
   }
 
-  submitProjectForm() {
+  getAllEmployees() {
+    this.employeeService.getAllEmployees().subscribe({
+      next: (value) => this.employees = value,
+      error: (err) => this.router.navigate(['/error'])
+    })
+  }
+
+  async checkIfProjectNumberExist(projectNumber: number): Promise<boolean> {
+    const result = await firstValueFrom(
+      this.projectService.checkIfProjectNumberExist(projectNumber));
+    this.projectNumberAlreadyExisted = result;
+    return result;
+  }
+
+  async submitProjectForm() {
+    this.invalid = false;
     if (this.projectForm.invalid) {
       this.invalid = true;
       return;
     }
+
+    this.projectNumberAlreadyExisted = false;
+    const projectNumber = this.projectForm.get('projectNumber')?.value as number;
+    await this.checkIfProjectNumberExist(projectNumber);
+    if (this.projectNumberAlreadyExisted) {
+      return;
+    }
+
     let membersAsString = this.projectForm.get('membersAsString')?.value as string;
-    const members = membersAsString.split(',').map(visa => visa.trim());
+    const memberVisas = membersAsString.split(',').map(visa => visa.trim());
+    const memberIds = this.employees.filter(e => memberVisas.includes(e.visa)).map(e => e.id);
+    this.invalidVisas = [];
+    if (memberIds.length != memberVisas.length) {
+      const visas = this.employees.filter(e => memberVisas.includes(e.visa)).map(e => e.visa);
+      this.invalidVisas = memberVisas.filter(m => !visas.includes(m));
+      return;
+    }
+
     const projectToAdd = {
-      projectNumber: this.projectForm.get('projectNumber')?.value,
+      projectNumber: projectNumber,
       projectName: this.projectForm.get('projectName')?.value,
       customer: this.projectForm.get('customer')?.value,
       groupId: this.projectForm.get('groupId')?.value,
-      members: members,
+      members: memberIds,
       status: this.projectForm.get('status')?.value,
       startDate: this.projectForm.get('startDate')?.value,
       endDate: this.projectForm.get('endDate')?.value,
     };
-    console.log(projectToAdd);
     this.addNewProject(projectToAdd);
   }
 

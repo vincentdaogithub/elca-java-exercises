@@ -36,12 +36,16 @@
         <ng-container *ngIf="projects && projects.length > 0">
             <tr class="data-row" *ngFor="let project of projects">
                 <td class="select-cell"><input type="checkbox" /></td>
-                <td class="data-cell">{{project.projectNumber}}</td>
+                <td class="data-cell"><p class="update-link" (click)="getUpdateProject(project.projectNumber)">{{project.projectNumber}}</p></td>
                 <td class="data-cell">{{project.projectName}}</td>
                 <td class="data-cell">{{project.status}}</td>
                 <td class="data-cell">{{project.customer}}</td>
                 <td class="data-cell">{{project.startDate}}</td>
-                <td class="delete-cell"></td>
+                <td class="delete-cell">
+                    <div class="delete-icon-container" *ngIf="project.status == 'NEW'">
+                        <img class="delete-icon" src="assets/img/delete.png" alt="delete icon" (click)="tryDeleteProject(project.id)" i18n-alt />
+                    </div>
+                </td>
             </tr>
         </ng-container>
     </table>
@@ -58,5 +62,16 @@
             <img src="assets/img/nextpage_icon.png" alt="next page icon" i18n-alt />
         </a>
     </div>
+
 </form>
 
+<div class="pop-up-delete" *ngIf="confirmedDelete">
+    <div class="pop-up-box">
+        <p class="delete-text" i18n>Are you sure you want to delete?</p>
+
+        <div class="delete-control">
+            <button class="cancel-delete" type="button" (click)="cancelDelete()" i18n>Cancel</button>
+            <button class="confirm-delete" type="button" (click)="confirmDelete()" i18n>Delete</button>
+        </div>
+    </div>
+</div>

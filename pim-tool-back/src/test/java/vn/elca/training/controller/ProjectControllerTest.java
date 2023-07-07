@@ -25,8 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = {ProjectController.class})
@@ -93,7 +92,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void givenProjectController_whenPostProjectToUpdate_thenReturnUpdatedProject() throws Exception {
+    void givenProjectController_whenPutProjectToUpdate_thenReturnUpdatedProject() throws Exception {
         ProjectDto resultProject = new ProjectDto(
                 BigDecimal.ONE,
                 1,
@@ -108,7 +107,7 @@ class ProjectControllerTest {
         ObjectMapper objectMapper = new ObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String requestBody = objectMapper.writeValueAsString(new ProjectUpdateDto());
         String responseBody = objectMapper.writeValueAsString(resultProject);
-        mockMvc.perform(post("/pim-api/projects/update")
+        mockMvc.perform(put("/pim-api/projects/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isOk())
@@ -116,13 +115,13 @@ class ProjectControllerTest {
     }
 
     @Test
-    void givenProjectController_whenPostProjectIdToRemove_thenRemoveIt() throws Exception {
+    void givenProjectController_whenDeleteProjectIdToRemove_thenRemoveIt() throws Exception {
         assertThatCode(() -> {
             projectService.removeProject(BigDecimal.ONE);
         }).doesNotThrowAnyException();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/pim-api/projects/remove")
+        mockMvc.perform(delete("/pim-api/projects/remove")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(BigDecimal.valueOf(1))))
                 .andExpect(status().isOk())
@@ -130,7 +129,7 @@ class ProjectControllerTest {
     }
 
     @Test
-    void givenProjectController_whenPostProjectIdsToRemove_thenRemoveAllOfThem() throws Exception {
+    void givenProjectController_whenDeleteProjectIdsToRemove_thenRemoveAllOfThem() throws Exception {
         List<BigDecimal> projectIdsToRemove = new ArrayList<>();
         projectIdsToRemove.add(BigDecimal.valueOf(1));
         projectIdsToRemove.add(BigDecimal.valueOf(2));
@@ -141,7 +140,7 @@ class ProjectControllerTest {
         }).doesNotThrowAnyException();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/pim-api/projects/remove")
+        mockMvc.perform(delete("/pim-api/projects/remove")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(projectIdsToRemove)))
                 .andExpect(status().isOk())

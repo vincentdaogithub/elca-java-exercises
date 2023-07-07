@@ -10,6 +10,7 @@ import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { NewProjectComponent } from './new-project/new-project.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
+import { UpdateProjectComponent } from './update-project/update-project.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ErrorComponent } from './error/error.component';
     PimNavigationComponent,
     ProjectsListComponent,
     NewProjectComponent,
-    ErrorComponent
+    ErrorComponent,
+    UpdateProjectComponent
   ],
   imports: [
     BrowserModule,

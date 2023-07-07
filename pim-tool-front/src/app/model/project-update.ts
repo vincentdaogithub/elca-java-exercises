@@ -1,5 +1,4 @@
 export interface ProjectUpdateDto {
-    id: number;
     projectNumber: number;
     projectName: string;
     customer: string;
@@ -8,4 +7,5 @@ export interface ProjectUpdateDto {
     status: string;
     startDate: Date;
     endDate: Date;
+    version: number;
 }

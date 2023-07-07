@@ -19,4 +19,8 @@ public interface ProjectService {
     void removeProject(BigDecimal projectIdToRemove);
 
     void removeProjects(List<BigDecimal> projectIdsToRemove);
+
+    boolean checkIfProjectNumberExist(Integer projectNumber);
+
+    ProjectUpdateDto getProjectByProjectNumber(Integer projectNumber);
 }

@@ -77,7 +77,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     public Project updateProject(Project projectToUpdate) {
         Project projectToUpdateInDatabase = new JPAQuery<Project>(entityManager)
                 .from(project)
-                .where(project.id.eq(projectToUpdate.getId()))
+                .where(project.projectNumber.eq(projectToUpdate.getProjectNumber()))
                 .fetchOne();
         if (projectToUpdateInDatabase == null) {
             throw new UpdateNonExistingProjectException();
@@ -87,12 +87,12 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             throw new ModifyExistingProjectNumberException();
         }
         if (!projectToUpdateInDatabase.getVersion().equals(projectToUpdate.getVersion())) {
-            throw new OptimisticLockException("Concurrent update at " + ProjectRepositoryImpl.class.getName());
+            throw new OptimisticLockException("Attempted to Concurrently Update");
         }
 
         entityManager.flush();
         long result = new JPAUpdateClause(entityManager, project)
-                .where(project.id.eq(projectToUpdate.getId()))
+                .where(project.projectNumber.eq(projectToUpdate.getProjectNumber()))
                 .set(project.group, projectToUpdate.getGroup())
                 .set(project.name, projectToUpdate.getName())
                 .set(project.customer, projectToUpdate.getCustomer())
@@ -108,7 +108,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         return new JPAQuery<Project>(entityManager)
                 .from(project)
-                .where(project.id.eq(projectToUpdate.getId()))
+                .where(project.projectNumber.eq(projectToUpdate.getProjectNumber()))
                 .fetchOne();
     }
 
@@ -134,5 +134,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             throw new NoProjectRemoveException();
         }
         entityManager.clear();
+    }
+
+    @Override
+    public Project getProjectByProjectNumber(Integer projectNumber) {
+        return new JPAQuery<Project>(entityManager)
+                .from(project)
+                .where(project.projectNumber.eq(projectNumber))
+                .fetchOne();
     }
 }

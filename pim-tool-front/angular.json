@@ -5,9 +5,11 @@
   "projects": {
     "pim-tool-front": {
       "i18n": {
-        "sourceLocale":"en-US",
+        "sourceLocale":"en",
         "locales": {
-          "fr-FR": "src/locale/fr-FR.json"
+          "fr": {
+            "translation": "src/locale/messages.fr.json"
+          }
         }
       },
       "projectType": "application",
@@ -19,9 +21,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": [
-              "fr-FR"
-            ],
+            "localize": true,
             "outputPath": "dist/pim-tool-front",
             "index": "src/index.html",
             "main": "src/main.ts",

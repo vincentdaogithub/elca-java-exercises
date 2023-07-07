@@ -16,6 +16,7 @@ public class ProjectUpdateDto {
     private ProjectStatus status;
     private Date startDate;
     private Date endDate;
+    private Long version;
 
     public ProjectUpdateDto() { }
 
@@ -29,6 +30,19 @@ public class ProjectUpdateDto {
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public ProjectUpdateDto(Integer projectNumber, String projectName, String customer, BigDecimal groupId,
+                            List<BigDecimal> members, ProjectStatus status, Date startDate, Date endDate, Long version) {
+        this.projectNumber = projectNumber;
+        this.projectName = projectName;
+        this.customer = customer;
+        this.groupId = groupId;
+        this.members = members;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.version = version;
     }
 
     public Integer getProjectNumber() {
@@ -93,5 +107,13 @@ public class ProjectUpdateDto {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

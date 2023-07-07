@@ -124,8 +124,7 @@
     height: 32px;
 }
 
-.select-cell,
-.delete-cell {
+.select-cell {
     text-align: center;
     vertical-align: middle;
 }
@@ -147,4 +146,91 @@
     align-items: center;
     text-decoration: none;
     color: #2f65fa;
+}
+
+.update-link {
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+}
+
+.update-link:hover {
+    background-color: #b9b9b9;
+}
+
+.delete-cell {
+    position: relative;
+}
+
+.delete-icon-container {
+    width: 14pt;
+    height: 14pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.delete-icon {
+    width: 100%;
+    height: auto;
+}
+
+.pop-up-delete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000041;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pop-up-box {
+    width: 40%;
+    height: 40%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    font-size: 18pt;
+    font-weight: 600;
+}
+
+.delete-text {
+    color: red;
+}
+
+.delete-control {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel-delete,
+.confirm-delete {
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.cancel-delete {
+    background-color: #2f65fa;
+}
+
+.confirm-delete {
+    background-color: red;
 }

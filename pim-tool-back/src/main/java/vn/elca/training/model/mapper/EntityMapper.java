@@ -7,7 +7,7 @@ import vn.elca.training.model.entity.Group;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.entity.ProjectEmployee;
 
-import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 @Component
 public class EntityMapper {
@@ -61,7 +61,24 @@ public class EntityMapper {
         project.setStatus(projectUpdateDto.getStatus());
         project.setStartDate(projectUpdateDto.getStartDate());
         project.setEndDate(projectUpdateDto.getEndDate());
-        project.setVersion(0L);
+        project.setVersion(projectUpdateDto.getVersion() == null ? 0L : projectUpdateDto.getVersion());
         return project;
+    }
+
+    public ProjectUpdateDto mapProjectToProjectUpdateDto(Project project) {
+        ProjectUpdateDto projectUpdateDto = new ProjectUpdateDto();
+        projectUpdateDto.setProjectNumber(project.getProjectNumber());
+        projectUpdateDto.setProjectName(project.getName());
+        projectUpdateDto.setCustomer(project.getCustomer());
+        projectUpdateDto.setGroupId(project.getGroup().getId());
+        projectUpdateDto.setMembers(project.getProjectEmployees()
+                .stream()
+                .map(e -> e.getEmployee().getId())
+                .collect(Collectors.toList()));
+        projectUpdateDto.setStatus(project.getStatus());
+        projectUpdateDto.setStartDate(project.getStartDate());
+        projectUpdateDto.setEndDate(project.getEndDate());
+        projectUpdateDto.setVersion(project.getVersion());
+        return projectUpdateDto;
     }
 }

@@ -75,6 +75,7 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ProjectDto updateProject(ProjectUpdateDto projectToUpdate) {
         Group groupToUpdate = groupRepository.getGroupById(projectToUpdate.getGroupId());
         Project project = entityMapper.mapProjectUpdateDtoToProject(projectToUpdate, groupToUpdate);
@@ -89,14 +90,32 @@ public class ProjectServiceImpl extends AbstractService implements ProjectServic
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void removeProject(BigDecimal projectIdToRemove) {
         projectEmployeeRepository.removeProjectEmployeesByProjectId(projectIdToRemove);
         projectRepository.removeProject(projectIdToRemove);
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void removeProjects(List<BigDecimal> projectIdsToRemove) {
         projectIdsToRemove.forEach(projectEmployeeRepository::removeProjectEmployeesByProjectId);
         projectRepository.removeProjects(projectIdsToRemove);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public boolean checkIfProjectNumberExist(Integer projectNumber) {
+        return projectRepository.getProjectByProjectNumber(projectNumber) != null;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public ProjectUpdateDto getProjectByProjectNumber(Integer projectNumber) {
+        Project result = projectRepository.getProjectByProjectNumber(projectNumber);
+        if (result == null) {
+            return null;
+        }
+        return entityMapper.mapProjectToProjectUpdateDto(result);
     }
 }
