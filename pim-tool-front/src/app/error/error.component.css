@@ -1,0 +1,52 @@
+:host {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.error-container {
+    width: 50%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-icon-container {
+    width: 30vh;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.error-icon {
+    width: 100%;
+    height: auto;
+}
+
+.error-detail-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 18pt;
+    font-weight: 600;
+}
+
+.contact-link {
+    color: red;
+}
+
+.back {
+    margin-top: 2rem;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #2f85fa;
+}

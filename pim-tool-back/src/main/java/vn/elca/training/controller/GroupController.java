@@ -23,7 +23,7 @@ public class GroupController extends AbstractController {
     }
 
     @GetMapping(path = "/")
-    public ResponseEntity<List<GroupDto>> getAllProjectsAsDto() {
+    public ResponseEntity<List<GroupDto>> getAllGroup() {
         return new ResponseEntity<>(
                 groupService.getAllGroups(), HttpStatus.OK);
     }

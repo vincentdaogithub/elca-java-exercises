@@ -1,1 +1,81 @@
-<p>new-project works!</p>
+<h1 class="title" i18n="newProjectTitle">New Project</h1>
+
+<form [formGroup]="projectForm" (ngSubmit)="submitProjectForm()">
+
+    <div class="error-box" *ngIf="invalid">
+        <p class="error-message" i18n>Please enter all the mandatory field (*) with correct format</p>
+        <p class="close-error" (click)="closeError()">x</p>
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="projectNumber" i18n>Project Number</label><span class="color-red"> *</span>
+        </div>
+        <input class="input short" type="number" name="projectNumber" required="This field is required" min="1" max="9999" formControlName="projectNumber" />
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="projectName" i18n>Project Name</label><span class="color-red"> *</span>
+        </div>
+        <input class="input" type="text" name="projectName" formControlName="projectName" />
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="customer" i18n>Customer</label><span class="color-red"> *</span>
+        </div>
+        <input class="input" type="text" name="customer" formControlName="customer" />
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="group" i18n>Group</label><span class="color-red"> *</span>
+        </div>
+        <select class="input short" name="group" formControlName="groupId">
+            <option value="" i18n>Choose group...</option>
+            <option *ngFor="let group of groups" value="{{group.id}}">{{group.groupLeaderVisa}}</option>
+        </select>
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="members" i18n>Members</label>
+        </div>
+        <input class="input" type="text" name="members" formControlName="membersAsString" />
+    </div>
+
+    <div class="input-box">
+        <div class="label-box">
+            <label for="status" i18n>Status</label><span class="color-red"> *</span>
+        </div>
+        <select class="input short" name="status" formControlName="status">
+            <option value="" i18n>Choose status</option>
+            <option value="NEW" i18n>New</option>
+            <option value="PLA" i18n>Planning</option>
+            <option value="INP" i18n>In progress</option>
+            <option value="FIN" i18n>Finished</option>
+        </select>
+    </div>
+
+    <div class="date-box">
+        <div class="date-input-box start">
+            <div class="date-label-box">
+                <label for="startDate" i18n>Start Date</label><span class="color-red"> *</span>
+            </div>
+            <input class="date-input" type="date" name="startDate" formControlName="startDate" />
+        </div>
+
+        <div class="date-input-box end">
+            <div class="date-label-box">
+                <label for="endDate" i18n>End Date</label>
+            </div>
+            <input class="date-input" type="date" name="endDate" formControlName="endDate" />
+        </div>
+    </div>
+
+    <div class="control-box">
+        <a class="cancel" routerLink="projects" i18n>Cancel</a>
+        <input class="create-button" type="submit" value="Create Project" i18n-value />
+    </div>
+</form>

@@ -1,5 +1,7 @@
 package vn.elca.training.model.constant_value;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import vn.elca.training.model.exception.InvalidProjectStatusException;
 
 import java.util.stream.Stream;
@@ -17,10 +19,12 @@ public enum ProjectStatus {
         this.status = status;
     }
 
+    @JsonValue
     public String getStatus() {
         return status;
     }
 
+    @JsonCreator
     public static ProjectStatus convert(String status) {
         if (status == null) {
             throw new InvalidProjectStatusException();

@@ -16,4 +16,8 @@ export class ProjectService {
   public getAllProjects(): Observable<ProjectDto[]> {
     return this.http.get<ProjectDto[]>(`${this.apiUrl}/projects/`);
   }
+
+  public addNewProject(projectToUpdate: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/projects/add`, projectToUpdate);
+  }
 }

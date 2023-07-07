@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectDto } from '../model/project';
 import { ProjectService } from '../project.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-projects-list',
@@ -15,7 +16,9 @@ export class ProjectsListComponent implements OnInit {
       this.getAllProjects();
   }
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private formBuilder: FormBuilder) { }
 
   public getAllProjects(): void {
     this.projectService.getAllProjects().subscribe({

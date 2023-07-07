@@ -6,10 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.elca.training.controller.exception.InvalidUserRequestException;
+import vn.elca.training.model.converter.ProjectStatusConverter;
 import vn.elca.training.model.dto.ProjectDto;
 import vn.elca.training.model.dto.ProjectUpdateDto;
 import vn.elca.training.service.ProjectService;
 
+import javax.persistence.Convert;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class ProjectController extends AbstractController {
     }
 
     @PostMapping(path = "/update")
+    @Convert(converter = ProjectStatusConverter.class)
     public ResponseEntity<ProjectDto> updateProject(
             @RequestBody ProjectUpdateDto projectToUpdate) {
         return new ResponseEntity<>(projectService.updateProject(projectToUpdate), HttpStatus.OK);

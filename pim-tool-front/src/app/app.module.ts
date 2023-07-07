@@ -9,6 +9,7 @@ import { PimNavigationComponent } from './pim-navigation/pim-navigation.componen
 import { ProjectsListComponent } from './projects-list/projects-list.component';
 import { NewProjectComponent } from './new-project/new-project.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     PimHeaderComponent,
     PimNavigationComponent,
     ProjectsListComponent,
-    NewProjectComponent
+    NewProjectComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

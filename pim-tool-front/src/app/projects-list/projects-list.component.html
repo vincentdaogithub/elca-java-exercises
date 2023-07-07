@@ -2,8 +2,10 @@
 
 <form class="search-container">
     <div class="search-input-container">
-        <input class="input any-input" type="text" placeholder="Project number, name, customer name" i18n-placeholder />
+        <label for="searchAny" aria-label="Search by project number, name, customer name" i18n-ariaLabel></label>
+        <input class="input any-input" type="text" name="searchAny" placeholder="Project number, name, customer name" i18n-placeholder />
 
+        <label for="searchStatus" aria-label="Search by project status" i18n-ariaLabel></label>
         <select class="input project-status-input">
             <option i18n>Project status</option>
             <option i18n>Project status</option>
@@ -15,7 +17,7 @@
     <div class="search-control-container">
         <input class="search-button" type="submit" value="Search Project" i18n-value />
 
-        <a class="reset-search-button" routerLink="/projects-list" i18n>Reset Search</a>
+        <a class="reset-search-button" routerLink="projects" i18n>Reset Search</a>
     </div>
 </form>
 
@@ -48,10 +50,10 @@
         <a class="page-button">
             <img src="assets/img/previous_page.png" alt="previous page icon" i18n-alt />
         </a>
-        <a class="page-button" routerLink="/projects-list">1</a>
-        <a class="page-button" routerLink="/projects-list">2</a>
-        <a class="page-button" routerLink="/projects-list">3</a>
-        <a class="page-button" routerLink="/projects-list">4</a>
+        <a class="page-button" routerLink="projects">1</a>
+        <a class="page-button" routerLink="projects">2</a>
+        <a class="page-button" routerLink="projects">3</a>
+        <a class="page-button" routerLink="projects">4</a>
         <a class="page-button">
             <img src="assets/img/nextpage_icon.png" alt="next page icon" i18n-alt />
         </a>

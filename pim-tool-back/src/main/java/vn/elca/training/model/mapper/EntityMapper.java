@@ -54,7 +54,6 @@ public class EntityMapper {
             ProjectUpdateDto projectUpdateDto,
             Group group) {
         Project project = new Project();
-        project.setId(BigDecimal.ZERO);
         project.setGroup(group);
         project.setProjectNumber(projectUpdateDto.getProjectNumber());
         project.setName(projectUpdateDto.getProjectName());
