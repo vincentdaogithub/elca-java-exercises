@@ -1,0 +1,60 @@
+<h2 class="projects-list-title" i18n>Projects list</h2>
+
+<form class="search-container">
+    <div class="search-input-container">
+        <input class="input any-input" type="text" placeholder="Project number, name, customer name" i18n-placeholder />
+
+        <select class="input project-status-input">
+            <option i18n>Project status</option>
+            <option i18n>Project status</option>
+            <option i18n>Project status</option>
+            <option i18n>Project status</option>
+        </select>
+    </div>
+
+    <div class="search-control-container">
+        <input class="search-button" type="submit" value="Search Project" i18n-value />
+
+        <a class="reset-search-button" routerLink="/projects-list" i18n>Reset Search</a>
+    </div>
+</form>
+
+<form class="projects-list-container">
+    <table class="projects-list-table">
+        <tr class="header-row">
+            <th class="select-header"></th>
+            <th class="data-header" i18n>Number</th>
+            <th class="data-header" i18n>Name</th>
+            <th class="data-header" i18n>Status</th>
+            <th class="data-header" i18n>Customer</th>
+            <th class="data-header" i18n>Start Date</th>
+            <th class="data-header" i18n>Delete</th>
+        </tr>
+
+        <ng-container *ngIf="projects && projects.length > 0">
+            <tr class="data-row" *ngFor="let project of projects">
+                <td class="select-cell"><input type="checkbox" /></td>
+                <td class="data-cell">{{project.projectNumber}}</td>
+                <td class="data-cell">{{project.projectName}}</td>
+                <td class="data-cell">{{project.status}}</td>
+                <td class="data-cell">{{project.customer}}</td>
+                <td class="data-cell">{{project.startDate}}</td>
+                <td class="delete-cell"></td>
+            </tr>
+        </ng-container>
+    </table>
+
+    <div class="projects-list-pages-container">
+        <a class="page-button">
+            <img src="assets/img/previous_page.png" alt="previous page icon" i18n-alt />
+        </a>
+        <a class="page-button" routerLink="/projects-list">1</a>
+        <a class="page-button" routerLink="/projects-list">2</a>
+        <a class="page-button" routerLink="/projects-list">3</a>
+        <a class="page-button" routerLink="/projects-list">4</a>
+        <a class="page-button">
+            <img src="assets/img/nextpage_icon.png" alt="next page icon" i18n-alt />
+        </a>
+    </div>
+</form>
+

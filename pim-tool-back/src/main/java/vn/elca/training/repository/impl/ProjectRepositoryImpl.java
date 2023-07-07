@@ -14,7 +14,9 @@ import vn.elca.training.repository.exception.*;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProjectRepositoryImpl implements ProjectRepository {
@@ -31,7 +33,10 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     public List<Project> getAllProjects() {
         return new JPAQuery<Project>(entityManager)
                 .from(project)
-                .fetch();
+                .fetch()
+                .stream()
+                .sorted(Comparator.comparing(Project::getProjectNumber))
+                .collect(Collectors.toList());
     }
 
     @Override

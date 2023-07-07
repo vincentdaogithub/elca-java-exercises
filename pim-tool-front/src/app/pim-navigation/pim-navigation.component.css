@@ -1,0 +1,70 @@
+:host {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    border-right: 0.1rem solid #b9b9b9;
+}
+
+* {
+    color: #666666;
+}
+
+.project-nav {
+    margin: 2rem 3rem 0 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+a {
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.project-lists-button {
+    font-size: 18pt;
+    font-weight: 600;
+    color: #2f85fa;
+}
+
+.project-lists-button.main-active {
+    color: #333333;
+}
+
+.new-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.new-button {
+    font-size: 18pt;
+    font-weight: 600;
+    color: #2f85fa;
+}
+
+.new-actions-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.new-action-button {
+    margin-top: 0.8rem;
+    font-size: 14pt;
+}
+
+.new-action-button.sub-active {
+    color: #333333;
+    font-weight: 600;
+}

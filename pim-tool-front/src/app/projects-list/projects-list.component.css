@@ -1,0 +1,150 @@
+:host {
+    width: 100%;
+}
+
+.projects-list-title {
+    width: 100%;
+    font-size: 18pt;
+    font-weight: 600;
+    color: #666666;
+    padding-bottom: 1rem;
+    border-bottom: 0.1rem solid #b9b9b9;
+}
+
+.search-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.search-input-container {
+    width: 40%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.input {
+    height: 30px;
+    border-radius: 5px;
+    border: 0.1rem solid #b9b9b9;
+}
+
+.any-input {
+    width: 60%;
+    margin-right: 1rem;
+    padding: 0 0.5rem;
+}
+
+.any-input::placeholder {
+    color: #b9b9b9;
+}
+
+.project-status-input {
+    flex: 1;
+    color: #b9b9b9;
+    padding: 0 0.5rem;
+}
+
+.search-control-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-button {
+    height: 35px;
+    padding: 0 2rem;
+    font-size: 12pt;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: #2f65fa;
+    color: #fff;
+    border: none;
+    margin-right: 3rem;
+    cursor: pointer;
+}
+
+.reset-search-button {
+    color: #2f65fa;
+    text-decoration: none;
+    font-size: 12pt;
+    font-weight: 600;
+}
+
+.projects-list-container {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.projects-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-header,
+.select-header {
+    border: 0.1rem solid #b9b9b9;
+    font-size: 14pt;
+    font-weight: 400;
+    color: #666666;
+}
+
+.select-header {
+    width: 32px;
+}
+
+.select-cell,
+.data-cell,
+.delete-cell {
+    border-left: 0.1rem solid #b9b9b9;
+    border-right: 0.1rem solid #b9b9b9;
+}
+
+.data-cell {
+    padding-left: 0.5rem;
+}
+
+.data-row:last-of-type {
+    border-bottom: 0.1rem solid #b9b9b9;
+}
+
+.header-row,
+.data-row {
+    height: 32px;
+}
+
+.select-cell,
+.delete-cell {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.projects-list-pages-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-button {
+    width: 32px;
+    height: 32px;
+    border: 0.1rem solid #b9b9b9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #2f65fa;
+}

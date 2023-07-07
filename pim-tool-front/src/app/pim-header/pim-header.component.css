@@ -2,8 +2,9 @@
     color: #666666;
 }
 
-header {
+:host {
     width: 100%;
+    height: 10vh;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
