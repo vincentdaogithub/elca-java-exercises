@@ -9,5 +9,4 @@ public class PimToolBackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PimToolBackApplication.class, args);
 	}
-
 }
