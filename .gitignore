@@ -26,7 +26,7 @@ speed-measure-plugin*.json
 *.iml
 
 # IDE - VSCode
-.vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
