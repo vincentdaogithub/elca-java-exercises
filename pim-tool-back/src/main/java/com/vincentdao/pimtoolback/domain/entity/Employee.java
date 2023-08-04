@@ -1,19 +1,65 @@
 package com.vincentdao.pimtoolback.domain.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
-public interface Employee {
+public class Employee extends Entity {
 
-    BigDecimal getId();
+    private String visa;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
 
-    String getVisa();
+    public String getVisa() {
+        return visa;
+    }
 
-    String getFirstName();
+    public String getFirstName() {
+        return firstName;
+    }
 
-    String getLastName();
+    public String getLastName() {
+        return lastName;
+    }
 
-    Date getBirthDate();
+    public Date getBirthDate() {
+        return birthDate;
+    }
 
-    String getFullName();
+    public void setVisa(String visa) {
+        this.visa = visa;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Objects.hash(birthDate, firstName, lastName, visa);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Employee other = (Employee) obj;
+        return Objects.equals(this.birthDate, other.birthDate) && Objects.equals(this.firstName, other.firstName)
+                && Objects.equals(this.lastName, other.lastName) && Objects.equals(this.visa, other.visa);
+    }
 }

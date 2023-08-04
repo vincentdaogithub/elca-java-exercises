@@ -16,12 +16,12 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
     public void validate(Project entity) {
         validateId(entity.getId());
         validateGroupId(entity.getGroupId());
-        validateProjectEmployeeIds(entity.getProjectEmployeeIds());
         validateProjectNumber(entity.getProjectNumber());
         validateName(entity.getName());
         validateCustomer(entity.getCustomer());
         validateStatus(entity.getStatus());
         validateProjectDate(entity.getStartDate(), entity.getEndDate());
+        validateProjectEmployeeIds(entity.getProjectEmployeeIds());
     }
 
     private void validateId(BigDecimal id) {
@@ -91,6 +91,10 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
         }
     }
 
+    private void validateProjectEmployeeIds(Collection<BigDecimal> projectEmployeeIds) {
+        projectEmployeeIds.stream().forEach(this::validateProjectEmployeeId);
+    }
+
     private void validateProjectEmployeeId(BigDecimal projectEmployeeId) {
         if (projectEmployeeId == null) {
             throw new ValidationException("Project employee id is null");
@@ -101,9 +105,5 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
         if (projectEmployeeId.compareTo(BigDecimal.ZERO) < 0 || projectEmployeeId.precision() > 19) {
             throw new ValidationException("Project employee id is below 0 or above 19 digits");
         }
-    }
-
-    private void validateProjectEmployeeIds(Collection<BigDecimal> projectEmployeeIds) {
-        projectEmployeeIds.stream().forEach(this::validateProjectEmployeeId);
     }
 }

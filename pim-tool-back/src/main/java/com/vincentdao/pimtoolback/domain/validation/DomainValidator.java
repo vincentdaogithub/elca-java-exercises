@@ -1,6 +1,8 @@
 package com.vincentdao.pimtoolback.domain.validation;
 
-public interface DomainValidator<T> {
+import com.vincentdao.pimtoolback.domain.entity.Entity;
+
+public interface DomainValidator<T extends Entity> {
 
     void validate(T entity);
 }

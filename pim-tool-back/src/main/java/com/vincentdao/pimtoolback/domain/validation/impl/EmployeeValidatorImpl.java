@@ -1,8 +1,6 @@
 package com.vincentdao.pimtoolback.domain.validation.impl;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.entity.Employee;
@@ -39,6 +37,9 @@ public class EmployeeValidatorImpl implements DomainValidator<Employee> {
         if (visa.length() > 3) {
             throw new ValidationException("Visa length exceeds length of 3 characters");
         }
+        if (!visa.equals(visa.toUpperCase())) {
+            throw new ValidationException("Visa is not in uppercase");
+        }
     }
 
     private void validateFirstName(String firstName) {
@@ -63,7 +64,7 @@ public class EmployeeValidatorImpl implements DomainValidator<Employee> {
         if (birthDate == null) {
             throw new ValidationException("Birth date is null");
         }
-        if (birthDate.compareTo(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())) >= 0) {
+        if (birthDate.compareTo(new Date()) >= 0) {
             throw new ValidationException("Birth date is today or in the future");
         }
     }

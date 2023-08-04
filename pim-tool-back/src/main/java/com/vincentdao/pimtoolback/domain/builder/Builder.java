@@ -1,6 +1,8 @@
 package com.vincentdao.pimtoolback.domain.builder;
 
-public abstract class Builder<T> {
+import com.vincentdao.pimtoolback.domain.entity.Entity;
+
+public abstract class Builder<T extends Entity> {
 
     protected T objToBuild;
 
