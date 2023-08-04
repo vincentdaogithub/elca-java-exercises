@@ -1,4 +1,6 @@
-package com.vincentdao.pimtoolback.domain.exception;
+package com.vincentdao.pimtoolback.domain.exception.impl;
+
+import com.vincentdao.pimtoolback.domain.exception.DomainException;
 
 public class ProjectEndDateNotAfterStartDateException extends DomainException {
 

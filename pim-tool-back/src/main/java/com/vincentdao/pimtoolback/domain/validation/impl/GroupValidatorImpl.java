@@ -3,7 +3,7 @@ package com.vincentdao.pimtoolback.domain.validation.impl;
 import java.math.BigDecimal;
 
 import com.vincentdao.pimtoolback.domain.entity.Group;
-import com.vincentdao.pimtoolback.domain.exception.ValidationException;
+import com.vincentdao.pimtoolback.domain.exception.impl.ValidationException;
 import com.vincentdao.pimtoolback.domain.validation.DomainValidator;
 
 public class GroupValidatorImpl implements DomainValidator<Group> {

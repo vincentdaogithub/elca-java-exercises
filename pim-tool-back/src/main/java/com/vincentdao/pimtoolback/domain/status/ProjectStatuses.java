@@ -2,7 +2,7 @@ package com.vincentdao.pimtoolback.domain.status;
 
 import org.apache.commons.text.WordUtils;
 
-import com.vincentdao.pimtoolback.domain.exception.InvalidProjectStatusException;
+import com.vincentdao.pimtoolback.domain.exception.impl.InvalidProjectStatusException;
 
 public enum ProjectStatuses {
 

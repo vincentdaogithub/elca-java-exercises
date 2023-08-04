@@ -3,6 +3,7 @@ package com.vincentdao.pimtoolback.domain.exception;
 public abstract class DomainException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
+
     private final String customMessage;
 
     protected DomainException() {

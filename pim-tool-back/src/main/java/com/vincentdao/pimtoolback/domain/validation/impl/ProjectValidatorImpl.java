@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.entity.Project;
-import com.vincentdao.pimtoolback.domain.exception.ProjectEndDateNotAfterStartDateException;
-import com.vincentdao.pimtoolback.domain.exception.ValidationException;
+import com.vincentdao.pimtoolback.domain.exception.impl.ProjectEndDateNotAfterStartDateException;
+import com.vincentdao.pimtoolback.domain.exception.impl.ValidationException;
 import com.vincentdao.pimtoolback.domain.status.ProjectStatuses;
 import com.vincentdao.pimtoolback.domain.validation.DomainValidator;
 

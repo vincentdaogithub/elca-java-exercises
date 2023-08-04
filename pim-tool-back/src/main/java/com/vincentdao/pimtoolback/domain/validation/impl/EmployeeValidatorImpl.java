@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.entity.Employee;
-import com.vincentdao.pimtoolback.domain.exception.ValidationException;
+import com.vincentdao.pimtoolback.domain.exception.impl.ValidationException;
 import com.vincentdao.pimtoolback.domain.validation.DomainValidator;
 
 public class EmployeeValidatorImpl implements DomainValidator<Employee> {

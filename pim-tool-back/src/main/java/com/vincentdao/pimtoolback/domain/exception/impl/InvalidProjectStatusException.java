@@ -1,5 +1,6 @@
-package com.vincentdao.pimtoolback.domain.exception;
+package com.vincentdao.pimtoolback.domain.exception.impl;
 
+import com.vincentdao.pimtoolback.domain.exception.DomainException;
 import com.vincentdao.pimtoolback.domain.status.ProjectStatuses;
 
 public class InvalidProjectStatusException extends DomainException {
