@@ -1,9 +1,9 @@
 package com.vincentdao.pimtoolback.domain.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Objects;
 
 import com.vincentdao.pimtoolback.domain.status.ProjectStatuses;
@@ -15,8 +15,8 @@ public class Project extends Entity {
     private String name;
     private String customer;
     private String status;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Collection<BigDecimal> projectEmployeeIds;
 
     public Project() {
@@ -26,7 +26,7 @@ public class Project extends Entity {
         this.name = "";
         this.customer = "";
         this.status = ProjectStatuses.NEW.getCode();
-        this.startDate = new Date();
+        this.startDate = LocalDate.now();
         this.endDate = null;
         this.projectEmployeeIds = Collections.emptyList();
     }
@@ -51,11 +51,11 @@ public class Project extends Entity {
         return status;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -83,11 +83,11 @@ public class Project extends Entity {
         this.status = status;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

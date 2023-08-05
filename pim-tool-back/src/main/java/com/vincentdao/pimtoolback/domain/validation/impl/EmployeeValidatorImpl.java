@@ -1,7 +1,9 @@
 package com.vincentdao.pimtoolback.domain.validation.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.vincentdao.pimtoolback.domain.entity.Employee;
 import com.vincentdao.pimtoolback.domain.exception.impl.ValidationException;
@@ -34,7 +36,10 @@ public class EmployeeValidatorImpl implements DomainValidator<Employee> {
         if (visa == null || visa.isBlank()) {
             throw new ValidationException("Visa is null or empty");
         }
-        if (visa.length() > 3) {
+        if (StringUtils.containsWhitespace(visa)) {
+            throw new ValidationException("Visa has whitespace");
+        }
+        if (visa.length() != 3) {
             throw new ValidationException("Visa length exceeds length of 3 characters");
         }
         if (!visa.equals(visa.toUpperCase())) {
@@ -46,6 +51,9 @@ public class EmployeeValidatorImpl implements DomainValidator<Employee> {
         if (firstName == null || firstName.isBlank()) {
             throw new ValidationException("First name is null or empty");
         }
+        if (firstName.trim().length() != firstName.length()) {
+            throw new ValidationException("First name has trailing spaces");
+        }
         if (firstName.length() > 50) {
             throw new ValidationException("First name length exceeds length of 50 characters");
         }
@@ -55,16 +63,19 @@ public class EmployeeValidatorImpl implements DomainValidator<Employee> {
         if (lastName == null || lastName.isBlank()) {
             throw new ValidationException("Last name is null or empty");
         }
+        if (lastName.trim().length() != lastName.length()) {
+            throw new ValidationException("Last name has trailing spaces");
+        }
         if (lastName.length() > 50) {
             throw new ValidationException("Last name length exceeds length of 50 characters");
         }
     }
 
-    private void validateBirthDate(Date birthDate) {
+    private void validateBirthDate(LocalDate birthDate) {
         if (birthDate == null) {
             throw new ValidationException("Birth date is null");
         }
-        if (birthDate.compareTo(new Date()) >= 0) {
+        if (birthDate.compareTo(LocalDate.now()) >= 0) {
             throw new ValidationException("Birth date is today or in the future");
         }
     }

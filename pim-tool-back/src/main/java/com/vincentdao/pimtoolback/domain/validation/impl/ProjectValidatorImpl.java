@@ -1,8 +1,8 @@
 package com.vincentdao.pimtoolback.domain.validation.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.entity.Project;
 import com.vincentdao.pimtoolback.domain.exception.impl.ProjectEndDateNotAfterStartDateException;
@@ -61,6 +61,9 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
         if (name == null || name.isBlank()) {
             throw new ValidationException("Name is null or empty");
         }
+        if (name.trim().length() != name.length()) {
+            throw new ValidationException("First name has trailing spaces");
+        }
         if (name.length() > 50) {
             throw new ValidationException("Name length exceeds length of 50 characters");
         }
@@ -69,6 +72,9 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
     private void validateCustomer(String customer) {
         if (customer == null || customer.isBlank()) {
             throw new ValidationException("Customer is null or empty");
+        }
+        if (customer.trim().length() != customer.length()) {
+            throw new ValidationException("First name has trailing spaces");
         }
         if (customer.length() > 50) {
             throw new ValidationException("Customer length exceeds length of 50 characters");
@@ -82,11 +88,11 @@ public class ProjectValidatorImpl implements DomainValidator<Project> {
         ProjectStatuses.convert(status);
     }
 
-    private void validateProjectDate(Date startDate, Date endDate) {
+    private void validateProjectDate(LocalDate startDate, LocalDate endDate) {
         if (startDate == null) {
             throw new ValidationException("Start date is null");
         }
-        if (endDate.after(startDate)) {
+        if (endDate != null && endDate.isBefore(startDate)) {
             throw new ProjectEndDateNotAfterStartDateException();
         }
     }

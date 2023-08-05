@@ -1,7 +1,7 @@
 package com.vincentdao.pimtoolback.domain.builder;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.vincentdao.pimtoolback.domain.entity.Employee;
 
@@ -15,7 +15,7 @@ public interface EmployeeBuilder {
 
     void setLastName(String lastName);
 
-    void setBirthDate(Date birthDate);
+    void setBirthDate(LocalDate birthDate);
 
     Employee build();
 }

@@ -1,6 +1,6 @@
 package com.vincentdao.pimtoolback.domain.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Employee extends Entity {
@@ -8,7 +8,7 @@ public class Employee extends Entity {
     private String visa;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private LocalDate birthDate;
 
     public String getVisa() {
         return visa;
@@ -22,7 +22,7 @@ public class Employee extends Entity {
         return lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
@@ -38,7 +38,7 @@ public class Employee extends Entity {
         this.lastName = lastName;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

@@ -1,8 +1,8 @@
 package com.vincentdao.pimtoolback.domain.builder.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.builder.Builder;
 import com.vincentdao.pimtoolback.domain.builder.ProjectBuilder;
@@ -41,12 +41,12 @@ public class ProjectBuilderImpl extends Builder<Project> implements ProjectBuild
     }
 
     @Override
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.objToBuild.setStartDate(startDate);
     }
 
     @Override
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.objToBuild.setEndDate(endDate);
     }
 

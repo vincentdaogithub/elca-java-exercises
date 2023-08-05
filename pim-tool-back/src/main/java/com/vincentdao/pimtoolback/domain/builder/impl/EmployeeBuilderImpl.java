@@ -1,7 +1,7 @@
 package com.vincentdao.pimtoolback.domain.builder.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.vincentdao.pimtoolback.domain.builder.Builder;
 import com.vincentdao.pimtoolback.domain.builder.EmployeeBuilder;
@@ -30,7 +30,7 @@ public class EmployeeBuilderImpl extends Builder<Employee> implements EmployeeBu
     }
 
     @Override
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.objToBuild.setBirthDate(birthDate);
     }
 

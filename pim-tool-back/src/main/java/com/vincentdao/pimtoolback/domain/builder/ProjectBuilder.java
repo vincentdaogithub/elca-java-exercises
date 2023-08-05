@@ -1,8 +1,8 @@
 package com.vincentdao.pimtoolback.domain.builder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 import com.vincentdao.pimtoolback.domain.entity.Project;
 
@@ -20,9 +20,9 @@ public interface ProjectBuilder {
 
     void setStatus(String status);
 
-    void setStartDate(Date startDate);
+    void setStartDate(LocalDate startDate);
 
-    void setEndDate(Date endDate);
+    void setEndDate(LocalDate endDate);
 
     void setProjectEmployeeIds(Collection<BigDecimal> projectEmployeeIds);
 
