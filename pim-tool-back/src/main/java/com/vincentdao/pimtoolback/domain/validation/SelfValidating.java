@@ -1,6 +1,6 @@
 package com.vincentdao.pimtoolback.domain.validation;
 
-public interface SelfValidatable {
+public interface SelfValidating {
 
     void validate();
 }

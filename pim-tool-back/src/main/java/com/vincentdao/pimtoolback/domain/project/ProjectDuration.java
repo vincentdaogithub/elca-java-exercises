@@ -1,20 +1,16 @@
 package com.vincentdao.pimtoolback.domain.project;
 
-import com.vincentdao.pimtoolback.domain.project.exception.EmptyStartDateException;
-import com.vincentdao.pimtoolback.domain.project.exception.EndDateIsNotAfterStartDateException;
+import com.vincentdao.pimtoolback.domain.exception.EndDateIsNotBeforeStartDateException;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public record ProjectDuration(LocalDate startDate, LocalDate endDate) {
 
     public ProjectDuration {
-        if (startDate == null) {
-            throw new EmptyStartDateException();
-        }
-        if (endDate != null) {
-            if (!endDate.isAfter(startDate)) {
-                throw new EndDateIsNotAfterStartDateException();
-            }
+        Objects.requireNonNull(startDate, "Start date must not be null");
+        if (endDate != null && !endDate.isBefore(startDate)) {
+            throw new EndDateIsNotBeforeStartDateException();
         }
     }
 }

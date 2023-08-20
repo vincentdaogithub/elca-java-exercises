@@ -1,12 +1,12 @@
 package com.vincentdao.pimtoolback.domain.employee;
 
-import com.vincentdao.pimtoolback.domain.employee.exception.InvalidEmployeeIdException;
+import java.util.Objects;
 
 public record EmployeeId(Long value) {
 
     public EmployeeId {
-        if (value == null || value < 1) {
-            throw new InvalidEmployeeIdException();
+        if (Objects.requireNonNull(value, "Id must not be null") < 1L) {
+            throw new IllegalArgumentException("Id must be positive");
         }
     }
 }

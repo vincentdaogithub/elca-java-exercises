@@ -1,23 +1,16 @@
 package com.vincentdao.pimtoolback.domain.group;
 
-import com.vincentdao.pimtoolback.domain.employee.Employee;
+import com.vincentdao.pimtoolback.domain.employee.EmployeeId;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
+@AllArgsConstructor
 public class Group {
 
     private final GroupId id;
-    private final Employee groupLeader;
 
-    private Group(GroupId id, Employee groupLeader) {
-        this.id = id;
-        this.groupLeader = groupLeader;
-    }
-
-    public static Group createNew(GroupId id, Employee groupLeader) {
-        if (id == null || groupLeader == null) {
-            throw new IllegalArgumentException("Null arguments");
-        }
-        return new Group(id, groupLeader);
-    }
+    @NonNull
+    private EmployeeId groupLeaderId;
 }

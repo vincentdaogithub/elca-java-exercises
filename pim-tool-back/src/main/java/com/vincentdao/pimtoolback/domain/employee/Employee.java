@@ -1,24 +1,21 @@
 package com.vincentdao.pimtoolback.domain.employee;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
+@AllArgsConstructor
 public class Employee {
 
     private final EmployeeId id;
-    private final Visa visa;
-    private final PersonalDetail personalDetail;
 
-    private Employee(EmployeeId id, Visa visa, PersonalDetail personalDetail) {
-        this.id = id;
-        this.visa = visa;
-        this.personalDetail = personalDetail;
-    }
+    @NonNull
+    private EmployeeVisa visa;
 
-    public static Employee createNew(EmployeeId id, Visa visa, PersonalDetail personalDetail) {
-        if (id == null || visa == null || personalDetail == null) {
-            throw new IllegalArgumentException("Null arguments");
-        }
-        return new Employee(id, visa, personalDetail);
-    }
+    @NonNull
+    private EmployeeName name;
+
+    @NonNull
+    private EmployeeBirthDate birthDate;
 }

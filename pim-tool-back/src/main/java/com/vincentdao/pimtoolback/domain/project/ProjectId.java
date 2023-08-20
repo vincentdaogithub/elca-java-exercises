@@ -1,12 +1,12 @@
 package com.vincentdao.pimtoolback.domain.project;
 
-import com.vincentdao.pimtoolback.domain.project.exception.InvalidProjectIdException;
+import java.util.Objects;
 
 public record ProjectId(Long value) {
 
     public ProjectId {
-        if (value == null || value < 1) {
-            throw new InvalidProjectIdException();
+        if (Objects.requireNonNull(value, "Id must not be null") < 1L) {
+            throw new IllegalArgumentException("Id must be positive");
         }
     }
 }
