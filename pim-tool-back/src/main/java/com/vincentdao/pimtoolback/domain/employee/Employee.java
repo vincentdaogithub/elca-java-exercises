@@ -1,21 +1,28 @@
 package com.vincentdao.pimtoolback.domain.employee;
 
+import com.vincentdao.pimtoolback.domain.validation.SelfValidating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
+
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
-public class Employee {
+public class Employee implements SelfValidating {
 
     private final EmployeeId id;
 
-    @NonNull
     private EmployeeVisa visa;
 
-    @NonNull
     private EmployeeName name;
 
-    @NonNull
     private EmployeeBirthDate birthDate;
+
+    @Override
+    public void validate() {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(visa);
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(birthDate);
+    }
 }

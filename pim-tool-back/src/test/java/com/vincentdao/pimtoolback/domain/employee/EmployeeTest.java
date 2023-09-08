@@ -180,7 +180,7 @@ class EmployeeTest {
                     null,
                     new EmployeeName("John", "Doe"),
                     new EmployeeBirthDate(LocalDate.now().minusYears(18))
-            );
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -189,7 +189,7 @@ class EmployeeTest {
                     new EmployeeVisa("ABC"),
                     null,
                     new EmployeeBirthDate(LocalDate.now().minusYears(18))
-            );
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -198,7 +198,7 @@ class EmployeeTest {
                     new EmployeeVisa("ABC"),
                     new EmployeeName("John", "Doe"),
                     null
-            );
+            ).validate();
         });
     }
 }

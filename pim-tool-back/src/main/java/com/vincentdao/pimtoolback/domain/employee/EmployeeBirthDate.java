@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public record EmployeeBirthDate(LocalDate value) {
 
-    private static final int MIN_AGE = 18;
+    public static final int MIN_AGE = 18;
 
     public EmployeeBirthDate {
         Objects.requireNonNull(value, "Birth date should not be null");

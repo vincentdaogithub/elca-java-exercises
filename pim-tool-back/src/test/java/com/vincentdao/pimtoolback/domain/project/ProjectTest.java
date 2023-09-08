@@ -14,8 +14,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatException;
@@ -35,7 +36,7 @@ class ProjectTest {
                         ProjectStatus.NEW,
                         LocalDate.now(),
                         null,
-                        new HashSet<EmployeeId>()
+                        new ArrayList<EmployeeId>()
                 ),
                 Arguments.of(
                         Long.MAX_VALUE,
@@ -47,7 +48,7 @@ class ProjectTest {
                         ProjectStatus.PENDING,
                         LocalDate.now(),
                         LocalDate.now().minusDays(1),
-                        new HashSet<EmployeeId>(Set.of(new EmployeeId(1L)))
+                        new ArrayList<>(List.of(new EmployeeId(1L)))
                 ),
                 Arguments.of(
                         RandomUtils.nextLong(1, Long.MAX_VALUE),
@@ -59,7 +60,7 @@ class ProjectTest {
                         ProjectStatus.IN_PROGRESS,
                         LocalDate.now(),
                         LocalDate.now().minusDays(18),
-                        new HashSet<EmployeeId>(Set.of(new EmployeeId(Long.MAX_VALUE)))
+                        new ArrayList<>(List.of(new EmployeeId(Long.MAX_VALUE)))
                 )
         );
     }
@@ -76,7 +77,7 @@ class ProjectTest {
             ProjectStatus projectStatus,
             LocalDate startDate,
             LocalDate endDate,
-            Set<EmployeeId> projectEmployees) {
+            List<EmployeeId> projectEmployees) {
         assertThatNoException().isThrownBy(() -> {
             new Project(
                     new ProjectId(id),
@@ -102,7 +103,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -127,7 +128,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -151,7 +152,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -177,7 +178,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -204,7 +205,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -221,7 +222,7 @@ class ProjectTest {
                     new ProjectCustomer(projectCustomerName),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -247,7 +248,7 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(startDate, endDate),
-                    new HashSet<>()
+                    new ArrayList<>()
             );
         });
     }
@@ -263,8 +264,8 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -276,8 +277,8 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -289,8 +290,8 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -302,8 +303,8 @@ class ProjectTest {
                     null,
                     ProjectStatus.FINISHED,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -315,8 +316,8 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     null,
                     new ProjectDuration(LocalDate.now(), null),
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -328,8 +329,8 @@ class ProjectTest {
                     new ProjectCustomer("B"),
                     ProjectStatus.PENDING,
                     null,
-                    new HashSet<>()
-            );
+                    new ArrayList<>()
+            ).validate();
         });
 
         assertThatException().isThrownBy(() -> {
@@ -342,7 +343,7 @@ class ProjectTest {
                     ProjectStatus.PENDING,
                     new ProjectDuration(LocalDate.now(), null),
                     null
-            );
+            ).validate();
         });
     }
 }

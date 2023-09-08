@@ -5,9 +5,9 @@ import com.vincentdao.pimtoolback.domain.exception.ProjectEmployeeListContainsGr
 import com.vincentdao.pimtoolback.domain.validation.SelfValidating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
@@ -15,29 +15,31 @@ public class Project implements SelfValidating {
 
     private final ProjectId id;
 
-    @NonNull
     private ProjectGroup projectGroup;
 
-    @NonNull
     private final ProjectNumber projectNumber;
 
-    @NonNull
     private ProjectName projectName;
 
-    @NonNull
     private ProjectCustomer projectCustomer;
 
-    @NonNull
     private ProjectStatus projectStatus;
 
-    @NonNull
     private ProjectDuration projectDuration;
 
-    @NonNull
-    private Set<EmployeeId> projectEmployees;
+    private List<EmployeeId> projectEmployees;
 
     @Override
     public void validate() {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(projectGroup);
+        Objects.requireNonNull(projectNumber);
+        Objects.requireNonNull(projectName);
+        Objects.requireNonNull(projectCustomer);
+        Objects.requireNonNull(projectStatus);
+        Objects.requireNonNull(projectDuration);
+        Objects.requireNonNull(projectEmployees);
+
         if (projectEmployees.contains(projectGroup.groupLeaderId())) {
             throw new ProjectEmployeeListContainsGroupLeaderException();
         }

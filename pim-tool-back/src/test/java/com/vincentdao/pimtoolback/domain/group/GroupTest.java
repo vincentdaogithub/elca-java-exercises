@@ -84,7 +84,7 @@ class GroupTest {
             new Group(
                     new GroupId(1L),
                     null
-            );
+            ).validate();
         });
     }
 }
